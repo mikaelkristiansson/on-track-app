@@ -1,11 +1,11 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export default styles = StyleSheet.create({
     text: {
         fontFamily: 'Avenir',
     },
     bold: {
-      fontWeight: 'bold'
+        fontWeight: 'bold'
     },
     buttonText: {
         fontFamily: 'Avenir',
@@ -51,11 +51,19 @@ export default styles = StyleSheet.create({
     },
     inputText: {
         marginBottom: 10,
-        padding: 10
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#DDDDDD'
+    },
+    logo: {
+        width: 100,
+        height: 100,
+        backgroundColor: 'transparent'
     },
     title: {
         fontSize: 40,
         margin: 10,
-        textAlign: 'center'
+        textAlign: 'center',
+        color: '#673AB7'
     },
 });

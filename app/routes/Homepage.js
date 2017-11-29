@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
-import {AsyncStorage, ScrollView, Text, TouchableOpacity, View, Modal, TouchableHighlight} from 'react-native';
+import {ScrollView, Text, TouchableOpacity, View, Modal, TouchableHighlight, AsyncStorage} from 'react-native';
 import {API_URL} from 'react-native-dotenv';
 import {Actions} from 'react-native-router-flux';
 import styles from './styles';
 import moment from "moment";
+import Auth from "../auth";
+import Exercises from "../api/exercises";
 
 class HomePage extends Component {
 
@@ -15,27 +17,25 @@ class HomePage extends Component {
             averageMonth: 0,
             showRegisterModal: false
         };
+        this.auth = new Auth();
+        this.exercises = new Exercises();
     }
 
     componentDidMount() {
-        this.getExercises('month', '2017-11-01');
+        this.getExercises();
     }
 
-    getExercises(type, date) {
+    getExercises() {
         AsyncStorage.getItem('token').then((token) => {
-            fetch(`${API_URL}/api/exercises/`, {
-                method: 'GET',
-                headers: {'Authorization': 'Bearer ' + token}
-            })
-                .then((response) => response.json())
+            this.exercises.getAll(token)
                 .then((exercises) => {
+                    console.log(exercises);
                     exercises = this.formatDate(exercises);
                     this.setState({
                         exercises: exercises
                     });
                     this.setAverage();
-                })
-                .done();
+                });
         });
     }
 
@@ -45,26 +45,14 @@ class HomePage extends Component {
 
     register() {
         AsyncStorage.getItem('token').then((token) => {
-            fetch(`${API_URL}/api/exercises/`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + token,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    type: 'gym'
-                })
-            })
-                .then((response) => response.json())
+            this.exercises.create(token)
                 .then((exercise) => {
                     let newExercise = this.formatDate([exercise])[0];
                     this.setState({
                         exercises: [...this.state.exercises, newExercise]
                     });
                     this.setAverage();
-                })
-                .done();
+                });
         });
     }
 
@@ -78,21 +66,22 @@ class HomePage extends Component {
 
     static calculateAverage(elements, duration) {
         const formatted = elements.map(elem => {
-            return { date: moment(elem.date).startOf(duration).format('YYYY-MM-DD'), count: elem.count }
+            return {date: moment(elem.date).startOf(duration).format('YYYY-MM-DD'), count: elem.count}
         });
 
         const dates = formatted.map(elem => elem.date);
         const uniqueDates = dates.filter((date, index) => dates.indexOf(date) === index);
 
         return uniqueDates.map(date => {
-            const count = formatted.filter(elem => elem.date === date).reduce((count) => count+1, 0);
-            return { date, count }
+            const count = formatted.filter(elem => elem.date === date).reduce((count) => count + 1, 0);
+            return {date, count}
         });
     }
 
     static average(elements) {
-        return elements.reduce((count, elem) => count + elem.count, 0)/elements.length;
+        return elements.reduce((count, elem) => count + elem.count, 0) / elements.length;
     }
+
     setAverage() {
         let exercises = this.state.exercises;
         let averageMonths = HomePage.calculateAverage(exercises, 'month');
@@ -100,18 +89,14 @@ class HomePage extends Component {
         let passedWeeks = moment().week();
         let passedMonths = moment().month();
         this.setState({
-            averageMonth: (Math.floor(HomePage.average(averageMonths))/passedMonths).toFixed(1),
-            averageWeek: (Math.floor(HomePage.average(averageWeeks))/passedWeeks).toFixed(1)
+            averageMonth: (Math.floor(HomePage.average(averageMonths)) / passedMonths).toFixed(1),
+            averageWeek: (Math.floor(HomePage.average(averageWeeks)) / passedWeeks).toFixed(1)
         });
     }
 
-    static async userLogout() {
-        try {
-            await AsyncStorage.removeItem('token');
-            Actions.Authentication();
-        } catch (error) {
-            console.log('AsyncStorage error: ' + error.message);
-        }
+    userLogOut() {
+        Auth.signOut()
+            .then(() => Actions.Authentication())
     }
 
     render() {
@@ -130,7 +115,7 @@ class HomePage extends Component {
                 }}>
                     <Text style={styles.button}> Register Activity </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.buttonWrapper} onPress={HomePage.userLogout}>
+                <TouchableOpacity style={styles.buttonWrapper} onPress={this.userLogOut}>
                     <Text style={styles.buttonText}> Log out </Text>
                 </TouchableOpacity>
                 <Modal

@@ -1,24 +1,31 @@
 import React, {Component} from 'react';
 import {Router, Scene} from 'react-native-router-flux';
-import {ActivityIndicator, AsyncStorage} from 'react-native';
+import {ActivityIndicator} from 'react-native';
 import Authentication from "./routes/Authentication";
 import HomePage from "./routes/Homepage";
+import Auth from "./auth";
 
 class App extends Component {
     constructor() {
         super();
-        this.state = { hasToken: false, isLoaded: false };
+        this.state = {hasToken: false, isLoaded: false};
+        this.auth = new Auth();
     }
 
     componentWillMount() {
-        AsyncStorage.getItem('token').then((token) => {
+        /*AsyncStorage.getItem('token').then((token) => {
             this.setState({ hasToken: token !== null, isLoaded: true });
-        });
+        });*/
+        this.auth.checkIfLoggedIn()
+            .then((token) => {
+                this.setState({hasToken: token !== null, isLoaded: true});
+            });
     }
+
     render() {
         if (!this.state.isLoaded) {
             return (
-                <ActivityIndicator />
+                <ActivityIndicator/>
             )
         } else {
             return (

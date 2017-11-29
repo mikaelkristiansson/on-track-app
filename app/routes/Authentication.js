@@ -1,64 +1,37 @@
 import React, {Component} from 'react';
-import {AsyncStorage, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import { API_URL } from 'react-native-dotenv';
+import {Image, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {API_URL} from 'react-native-dotenv';
 import {Actions} from 'react-native-router-flux';
 import styles from './styles';
+
+import logo from '../images/logo.png';
+import Auth from "../auth";
 
 class Authentication extends Component {
 
     constructor() {
         super();
         this.state = {username: null, password: null};
+        this.auth = new Auth();
     }
 
-    userSignup() {
+    userSignUp() {
         if (!this.state.username || !this.state.password) return;
-        fetch(`${API_URL}/auth/sign_up`, {
-            method: 'POST',
-            headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                username: this.state.username,
-                password: this.state.password,
-            })
-        })
-            .then((response) => response.json())
-            .then((responseData) => {
-                this.saveItem('token', responseData.token);
-                Actions.HomePage();
-            })
-            .done();
+        this.auth.signUp(this.state.username, this.state.password)
+            .catch(() => alert('Something went wrong'))
     }
 
     userLogin() {
         if (!this.state.username || !this.state.password) return;
-        fetch(`${API_URL}/auth/sign_in`, {
-            method: 'POST',
-            headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                username: this.state.username,
-                password: this.state.password,
-            })
-        })
-            .then((response) => response.json())
-            .then((responseData) => {
-                this.saveItem('token', responseData.token);
-                Actions.HomePage();
-            })
-            .done();
-    }
-
-    async saveItem(item, selectedValue) {
-        try {
-            await AsyncStorage.setItem(item, selectedValue);
-        } catch (error) {
-            console.error('AsyncStorage error: ' + error.message);
-        }
+        this.auth.signIn(this.state.username, this.state.password)
+            .catch(() => Auth.signOut().then(() => alert('Something went wrong')))
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}> Welcome </Text>
+                <Image source={logo} style={styles.logo}/>
+                <Text style={styles.title}> On Track </Text>
 
                 <View style={styles.form}>
                     <TextInput
@@ -66,7 +39,11 @@ class Authentication extends Component {
                         onChangeText={(username) => this.setState({username})}
                         placeholder='Username'
                         ref='username'
-                        returnKeyType='next'
+                        returnKeyType={'next'}
+                        autoCapitalize={'none'}
+                        autoCorrect={false}
+                        keyboardType={'email-address'}
+                        onSubmitEditing={() => this.refs.password.focus()}
                         style={styles.inputText}
                         value={this.state.username}
                     />
@@ -76,7 +53,8 @@ class Authentication extends Component {
                         onChangeText={(password) => this.setState({password})}
                         placeholder='Password'
                         ref='password'
-                        returnKeyType='next'
+                        returnKeyType='go'
+                        onSubmitEditing={() => this.userLogin()}
                         secureTextEntry={true}
                         style={styles.inputText}
                         value={this.state.password}
@@ -86,7 +64,7 @@ class Authentication extends Component {
                         <Text style={styles.buttonText}> Log In </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.buttonWrapper} onPress={this.userSignup.bind(this)}>
+                    <TouchableOpacity style={styles.buttonWrapper} onPress={this.userSignUp.bind(this)}>
                         <Text style={styles.buttonText}> Sign Up </Text>
                     </TouchableOpacity>
                 </View>
