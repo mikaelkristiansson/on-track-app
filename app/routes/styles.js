@@ -4,15 +4,24 @@ export default styles = StyleSheet.create({
     text: {
         fontFamily: 'Avenir',
     },
+    bold: {
+      fontWeight: 'bold'
+    },
     buttonText: {
+        fontFamily: 'Avenir',
         fontSize: 20,
         padding: 10,
-        textAlign: 'center'
+        textAlign: 'center',
+        color: '#673AB7'
     },
     buttonWrapper: {
-        backgroundColor:'#D3D3D3',
+        //backgroundColor:'#D3D3D3',
         marginBottom: 10,
-        width: 300
+        width: 300,
+        borderRadius: 100,
+        alignItems: 'center',
+        borderWidth: 2,
+        borderColor: '#673AB7'
     },
     buttonContainer: {
         backgroundColor: '#673AB7',
@@ -20,6 +29,7 @@ export default styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 15,
         alignItems: 'center',
+        marginBottom: 10
     },
     button: {
         fontFamily: 'Avenir',

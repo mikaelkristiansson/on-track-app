@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {AsyncStorage, Alert, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {AsyncStorage, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import { API_URL } from 'react-native-dotenv';
 import {Actions} from 'react-native-router-flux';
 import styles from './styles';
 
@@ -12,7 +13,7 @@ class Authentication extends Component {
 
     userSignup() {
         if (!this.state.username || !this.state.password) return;
-        fetch('http://localhost:3000/auth/sign_up', {
+        fetch(`${API_URL}/auth/sign_up`, {
             method: 'POST',
             headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -30,7 +31,7 @@ class Authentication extends Component {
 
     userLogin() {
         if (!this.state.username || !this.state.password) return;
-        fetch('http://localhost:3000/auth/sign_in', {
+        fetch(`${API_URL}/auth/sign_in`, {
             method: 'POST',
             headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
             body: JSON.stringify({
