@@ -10,3 +10,8 @@ To run your app on Android:
    cd /Users/mikaelkristiansson/Sites/ontrack/OnTrackApp
    Have an Android emulator running (quickest way to get started), or a device connected
    react-native run-android
+
+### Dependables:
+```
+npm install rnpm -g
+```

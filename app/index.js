@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {Router, Scene} from 'react-native-router-flux';
-import {ActivityIndicator} from 'react-native';
+import {ActivityIndicator, Text} from 'react-native';
 import Authentication from "./routes/Authentication";
-import HomePage from "./routes/Homepage";
 import Auth from "./auth";
+import Chart from "./routes/Chart";
+import Settings from "./routes/Settings";
+import Icon from "react-native-vector-icons/Ionicons";
 
 class App extends Component {
     constructor() {
@@ -28,6 +30,21 @@ class App extends Component {
                 <ActivityIndicator/>
             )
         } else {
+            const TabIcon = ({ focused, title }) => {
+                let icon = '';
+                switch (title) {
+                    case 'Chart':
+                        icon = 'ios-stats';
+                        break;
+                    case 'Settings':
+                        icon = 'ios-cog';
+                        break;
+                }
+                let color = focused ? '#673AB7' : '#ddd';
+                return (
+                    <Text><Icon name={icon} size={32} color={color} /></Text>
+                );
+            };
             return (
                 <Router>
                     <Scene key='root'>
@@ -39,12 +56,38 @@ class App extends Component {
                             title='Authentication'
                         />
                         <Scene
+                            key="tabbar"
+                            tabs={true}
+                            tabBarStyle={{ backgroundColor: '#F5FCFF', borderTopColor: "#ddd" }}
+                            initial={this.state.hasToken}
+                            hideNavBar={true}
+                            activeTintColor={"#673AB7"}
+                        >
+                            {/* Tab and it's scenes */}
+                            <Scene key="Chart" title="Chart" tabBarLabel={"Charts"} icon={TabIcon}>
+                                <Scene
+                                    hideNavBar={true}
+                                    key="Chart"
+                                    component={Chart}
+                                    title="Chart"
+                                />
+                            </Scene>
+                            <Scene key="Settings" title="Settings" tabBarLabel={"Settings"} icon={TabIcon}>
+                                <Scene
+                                    hideNavBar={true}
+                                    key="Settings"
+                                    component={Settings}
+                                    title="Settings"
+                                />
+                            </Scene>
+                        </Scene>
+                        {/*<Scene
                             component={HomePage}
                             initial={this.state.hasToken}
                             hideNavBar={true}
                             key='HomePage'
                             title='Home Page'
-                        />
+                        />*/}
                     </Scene>
                 </Router>
             )

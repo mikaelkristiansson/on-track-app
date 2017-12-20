@@ -16,7 +16,20 @@ class Exercises {
             },
         })
             .then((response) => {
-                console.log(response);
+                if (response.ok) return response.json();
+                Auth.signOut();
+            });
+    }
+
+    checkUpdates(token) {
+        return fetch(`${this.api}/exercises`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+        })
+            .then((response) => {
                 if (response.ok) return response.json();
                 Auth.signOut();
             });
