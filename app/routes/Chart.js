@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import {API_URL} from 'react-native-dotenv';
 import {Actions} from 'react-native-router-flux';
-import styles from './styles';
+import styles from '../styles';
 import moment from "moment";
 import Auth from "../auth";
 import Exercises from "../api/exercises";
@@ -24,6 +24,8 @@ class Chart extends Component {
         };
         this.auth = new Auth();
         this.exercises = new Exercises();
+        let dated = new Date();
+        this.weekOfMonth = (0 | dated.getDate() / 7)+1;
     }
 
     componentDidMount() {
@@ -145,11 +147,21 @@ class Chart extends Component {
                         />
                     }
                 >
-                    {/*{this.state.exercises.length ? this.state.exercises.map((exercise, index) => <Text
-                        key={index}>{exercise.created_at}</Text>) : <Text>ad</Text>}*/}
-                    <Text style={styles.bold}>Yearly</Text>
-                    <Text>Average Month: {this.state.averageMonth}</Text>
-                    <Text>Average Week: {this.state.averageWeek}</Text>
+                    <Text style={styles.h4}>{'Your Exercise Log'.toUpperCase()}</Text>
+                    <View style={{flex: 1, flexDirection: 'row'}}>
+                        <View style={{width: "33.3%", paddingLeft: 25}}>
+                            <Text style={styles.statsTitle}>Last Month</Text>
+                            <Text style={styles.purpleText}><Text style={styles.statsNumber}>0.8</Text><Text>/week</Text></Text>
+                        </View>
+                        <View style={{width: "33.3%", paddingLeft: 25}}>
+                            <Text style={styles.statsTitle}>Last 6 Months</Text>
+                            <Text style={styles.purpleText}><Text style={styles.statsNumber}>1.2</Text><Text>/week</Text></Text>
+                        </View>
+                        <View style={{width: "33.3%", paddingLeft: 25}}>
+                            <Text style={styles.statsTitle}>This Year</Text>
+                            <Text style={styles.purpleText}><Text style={styles.statsNumber}>{this.state.averageWeek}</Text><Text>/week</Text></Text>
+                        </View>
+                    </View>
                 </ScrollView>
                 <VictoryChart padding={{ top: 45, bottom: 0, left: -20, right: -20 }}>
                 <VictoryArea
@@ -202,7 +214,7 @@ class Chart extends Component {
                         },
                         tickLabels: {
                             fill: (tick) =>
-                            tick === 4 ? "red" : "#D0D1D5",
+                            tick === this.weekOfMonth ? "#FA3D4B" : "#D0D1D5",
                             fontFamily: "inherit",
                             fontSize: 14,
                             marginBottom: 60
@@ -225,7 +237,7 @@ class Chart extends Component {
                     //this.registerActivityModal(true)
                 }}>
                     <Text style={styles.button}> Register Activity </Text>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
                 <Modal
                     animationType="fade"
                     transparent={false}
@@ -248,6 +260,7 @@ class Chart extends Component {
                         </View>
                     </View>
                 </Modal>
+                 */}
             </View>
         );
     }

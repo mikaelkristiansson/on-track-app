@@ -1,5 +1,8 @@
 import {StyleSheet} from 'react-native';
 
+const purple = "#673AB7";
+const red = "#FA3D4B";
+
 export default styles = StyleSheet.create({
     text: {
         fontFamily: 'Avenir',
@@ -12,7 +15,7 @@ export default styles = StyleSheet.create({
         fontSize: 20,
         padding: 10,
         textAlign: 'center',
-        color: '#673AB7'
+        color: purple
     },
     buttonWrapper: {
         //backgroundColor:'#D3D3D3',
@@ -21,10 +24,10 @@ export default styles = StyleSheet.create({
         borderRadius: 100,
         alignItems: 'center',
         borderWidth: 2,
-        borderColor: '#673AB7'
+        borderColor: purple
     },
     buttonContainer: {
-        backgroundColor: '#673AB7',
+        backgroundColor: purple,
         borderRadius: 100,
         paddingVertical: 10,
         paddingHorizontal: 15,
@@ -64,6 +67,22 @@ export default styles = StyleSheet.create({
         fontSize: 40,
         margin: 10,
         textAlign: 'center',
-        color: '#673AB7'
+        color: purple
     },
+    h4: {
+        fontSize: 20,
+        textAlign: 'center',
+        paddingBottom: 10,
+        paddingTop: 10
+    },
+    statsTitle: {
+        fontWeight: '500'
+    },
+    purpleText: {
+        color: purple
+    },
+    statsNumber: {
+        fontSize: 26,
+        fontWeight: '600'
+    }
 });

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Image, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {API_URL} from 'react-native-dotenv';
 import {Actions} from 'react-native-router-flux';
-import styles from './styles';
+import styles from '../styles';
 
 import logo from '../images/logo.png';
 import Auth from "../auth";

@@ -34,15 +34,15 @@ class App extends Component {
                 let icon = '';
                 switch (title) {
                     case 'Chart':
-                        icon = 'ios-stats';
+                        icon = focused ? 'ios-analytics' : 'ios-analytics-outline';
                         break;
                     case 'Settings':
-                        icon = 'ios-cog';
+                        icon = focused ? 'ios-settings' : 'ios-settings-outline';
                         break;
                 }
-                let color = focused ? '#673AB7' : '#ddd';
+                let color = focused ? '#673AB7' : '#333';
                 return (
-                    <Text><Icon name={icon} size={32} color={color} /></Text>
+                    <Text><Icon name={icon} size={36} color={color} /></Text>
                 );
             };
             return (
@@ -58,10 +58,11 @@ class App extends Component {
                         <Scene
                             key="tabbar"
                             tabs={true}
-                            tabBarStyle={{ backgroundColor: '#F5FCFF', borderTopColor: "#ddd" }}
+                            tabBarStyle={{ backgroundColor: '#F5FCFF', borderTopColor: "#eee" }}
                             initial={this.state.hasToken}
                             hideNavBar={true}
                             activeTintColor={"#673AB7"}
+                            showLabel={false} 
                         >
                             {/* Tab and it's scenes */}
                             <Scene key="Chart" title="Chart" tabBarLabel={"Charts"} icon={TabIcon}>
