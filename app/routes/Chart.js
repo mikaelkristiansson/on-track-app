@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
     ScrollView, Text, TouchableOpacity, View, Modal, TouchableHighlight, AsyncStorage,
-    RefreshControl
+    RefreshControl, Dimensions
 } from 'react-native';
 import {API_URL} from 'react-native-dotenv';
 import {Actions} from 'react-native-router-flux';
@@ -10,6 +10,13 @@ import moment from "moment";
 import Auth from "../auth";
 import Exercises from "../api/exercises";
 import { VictoryChart, VictoryArea, VictoryZoomContainer, VictoryBrushContainer, VictoryAxis, VictoryTheme, VictoryScatter, VictoryTooltip } from "victory-native";
+import { TabViewAnimated, TabBar } from "react-native-tab-view";
+import ChartContainer from '../components/chart';
+
+const initialLayout = {
+    height: 0,
+    width: Dimensions.get('window').width,
+  };
 
 class Chart extends Component {
 
@@ -20,15 +27,54 @@ class Chart extends Component {
             averageWeek: 0,
             averageMonth: 0,
             showRegisterModal: false,
-            refreshing: false
+            refreshing: false,
+            index: 1,
+            routes: [
+                { key: '1', title: 'January' },
+                { key: '2', title: 'February' },
+                { key: '3', title: 'Mars' },
+                { key: '4', title: 'April' },
+                { key: '5', title: 'May' },
+                { key: '6', title: 'June' },
+                { key: '7', title: 'July' },
+                { key: '8', title: 'August' },
+                { key: '9', title: 'September' },
+                { key: '10', title: 'October' },
+                { key: '11', title: 'November' },
+                { key: '12', title: 'December' },
+            ],
         };
         this.auth = new Auth();
         this.exercises = new Exercises();
-        let dated = new Date();
-        this.weekOfMonth = (0 | dated.getDate() / 7)+1;
+        this.date = new Date();
+        this.weekOfMonth = (0 | this.date.getDate() / 7)+1;
     }
 
+      _handleIndexChange = index => {
+        this.setState({
+            index,
+        });
+      }
+
+  _renderHeader = props => (
+    <TabBar
+      {...props}
+      scrollEnabled
+      indicatorStyle={styles.indicator}
+      style={styles.tabbar}
+      tabStyle={styles.tab}
+      labelStyle={styles.label}
+    />
+  );
+
+  _renderScene = ({ route }) => {
+    
+  };
+
     componentDidMount() {
+        this.setState({
+            index: this.date.getMonth()
+        });
         this.getExercises();
     }
 
@@ -36,7 +82,6 @@ class Chart extends Component {
         AsyncStorage.getItem('token').then((token) => {
             this.exercises.getAll(token)
                 .then((exercises) => {
-                    console.log(exercises);
                     exercises = this.formatDate(exercises);
                     this.setState({
                         exercises: exercises
@@ -118,23 +163,7 @@ class Chart extends Component {
         });
     }
 
-    handleZoom(domain) {
-        this.setState({selectedDomain: domain});
-      }
-    
-      handleBrush(domain) {
-        this.setState({zoomDomain: domain});
-      }
-
     render() {
-        let data = [
-            { x: 1, y: 2 },
-            { x: 2, y: 2 },
-            { x: 3, y: 3 },
-            { x: 4, y: 5 },
-            { x: 5, y: 1 },
-            { x: 6, y: 1 },
-          ];
         return (
             <View style={styles.container}>
                 <ScrollView
@@ -163,104 +192,15 @@ class Chart extends Component {
                         </View>
                     </View>
                 </ScrollView>
-                <VictoryChart padding={{ top: 45, bottom: 0, left: -20, right: -20 }}>
-                <VictoryArea
-                    style={{
-                        data: {
-                          fill: "#FA3D4B", fillOpacity: 0.9, stroke: "#FA3D4B", strokeOpacity: 0.9, strokeWidth: 0
-                        },
-                        labels: {fill: "transparent"}
-                      }}
-                    interpolation={"monotoneX"}
-                    categories={{
-                        x: ["","WEEK 1", "WEEK 2", "WEEK 3", "WEEK 4", ""]
-                    }}
-                    labels={(d) => d.y}
-                    data={data}
-                    events={[{
-                        target: "data",
-                        eventHandlers: {
-                            onPressIn: () => {
-                            return [
-                              {
-                                target: "data",
-                                mutation: () => {}
-                              }, {
-                                target: "labels",
-                                mutation: () => ({ active: true, style: {fill: "red"} })
-                              }
-                            ];
-                          },
-                          onPressOut: () => {
-                            return [
-                              {
-                                target: "data",
-                                mutation: () => {}
-                              }, {
-                                target: "labels",
-                                mutation: () => ({ active: false })
-                              }
-                            ];
-                          }
-                        }
-                      }]}
+                <TabViewAnimated
+                    style={[styles.tabcontainer]}
+                    navigationState={this.state}
+                    renderScene={this._renderScene}
+                    renderHeader={this._renderHeader}
+                    onIndexChange={this._handleIndexChange}
+                    initialLayout={initialLayout}
                 />
-                <VictoryAxis
-                    orientation="top"
-                    style={{
-                        axis: { stroke: "transparent", strokeWidth: 0 },
-                        ticks: {
-                            size: 15
-                        },
-                        tickLabels: {
-                            fill: (tick) =>
-                            tick === this.weekOfMonth ? "#FA3D4B" : "#D0D1D5",
-                            fontFamily: "inherit",
-                            fontSize: 14,
-                            marginBottom: 60
-                          }
-                    }}
-                />
-                <VictoryScatter
-                    style={{
-                        data: {
-                            fill: "#FA3D4B", fillOpacity: 1, stroke: "#fff", strokeWidth: 6
-                        }
-                    }}
-                    size={9}
-                    data={data}
-                />
-    
-              </VictoryChart>
-                {/* <TouchableOpacity style={styles.buttonContainer} onPress={() => {
-                    this.register()
-                    //this.registerActivityModal(true)
-                }}>
-                    <Text style={styles.button}> Register Activity </Text>
-                </TouchableOpacity>
-                <Modal
-                    animationType="fade"
-                    transparent={false}
-                    visible={this.state.showRegisterModal}
-                    presentationStyle='formSheet'
-                    onRequestClose={() => {
-                        alert("Modal has been closed.")
-                    }}
-                >
-                    <View style={{marginTop: 22}}>
-                        <View>
-                            <Text>Hello World!</Text>
-
-                            <TouchableHighlight onPress={() => {
-                                this.registerActivityModal(!this.state.showRegisterModal)
-                            }}>
-                                <Text>Hide Modal</Text>
-                            </TouchableHighlight>
-
-                        </View>
-                    </View>
-                </Modal>
-                 */}
+                {this.state.exercises.length ? <ChartContainer selectedTab={this.state.index} exercises={this.state.exercises} tabs={this.state.routes} /> : <Text /> }
             </View>
         );
     }

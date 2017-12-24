@@ -2,8 +2,16 @@ import {StyleSheet} from 'react-native';
 
 const purple = "#673AB7";
 const red = "#FA3D4B";
+const darkBlue = "#15182D";
 
 export default styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#FFF',
+        paddingTop: 30
+    },
     text: {
         fontFamily: 'Avenir',
     },
@@ -39,12 +47,28 @@ export default styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: 18,
     },
-    container: {
+    tabcontainer: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-        paddingTop: 30
+        backgroundColor: "transparent",
+        maxHeight: 41,
+        marginBottom: 0
+    },
+    tabbar: {
+        backgroundColor: 'transparent',
+        height: 40,
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee'
+    },
+    tab: {
+        width: 120,
+    },
+    indicator: {
+        marginBottom: -1,
+        backgroundColor: red,
+    },
+    label: {
+        color: darkBlue,
+        fontWeight: '400',
     },
     form: {
         width: 300
