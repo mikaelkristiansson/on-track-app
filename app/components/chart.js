@@ -8,8 +8,9 @@ class ChartContainer extends Component {
         super(prop);
         let dated = new Date();
         this.weekOfMonth = (0 | dated.getDate() / 7)+1;
+        if (this.weekOfMonth === 5) this.weekOfMonth = 4;
         this.currentMonth = dated.getMonth();
-        console.log(prop.exercises);
+        console.log(this.currentMonth, prop.selectedTab);
         this.state = {
             data: []
         }
@@ -20,23 +21,32 @@ class ChartContainer extends Component {
         let months = [];
         this.props.tabs.map(tab => {
             let weeks = [];
-            for(let i=1; i<this.weeksinMonth(tab.key)+1; i++) weeks.push({x:i, y:0});
+            //for(let i=1; i<this.weeksinMonth(tab.key)+1; i++) weeks.push({x:i, y:0});
+            for(let i=1; i<5; i++) weeks.push({x:i, y:0});
             months.push({key: tab.key, weeks: weeks});
             //months.push({'x': tab.key, 'y': 0})
         });
+
         this.props.exercises.map(exercise => {
             let d = new Date(exercise.created_at);
             let month = d.getMonth();
             let week = (0 | d.getDate() / 7)+1;
-            months[month-1].weeks[week-1].y = months[month-1].weeks[week-1].y !== 0 ? months[month-1].weeks[week-1].y+1 : 1;
-            console.log(month, week);
+            if (week === 5) week = 4;
+            months[month].weeks[week-1].y = months[month].weeks[week-1].y !== 0 ? months[month].weeks[week-1].y+1 : 1;
+            //console.log(month, week);
             //months[month].y = months[month].y !== 0 ? months[month].y+1 : 1; 
+        });
+        months.forEach(month => {
+            //TODO: set to the previous month last week value
+            month.weeks.unshift({x:0, y: 0})
+            //TODO: set to the next month first week value
+            month.weeks.push({x:5, y: 0})
         });
         console.log(months);
         this.setState({
             data: months
         })
-        console.log(months[this.props.selectedTab-1].weeks);
+        console.log(months[this.props.selectedTab].weeks);
     }
 
     weeksinMonth(m, y) {
@@ -46,13 +56,14 @@ class ChartContainer extends Component {
     }
 
     setData() {
-        let g = this.state.data[this.props.selectedTab-1].weeks;
-        console.log(g.length);
-        if (g.length < 4) g.unshift({x:0, y: g[0].y});
-        if (g.length < 6) {
-            console.log("asd",{x: g.length+1, y: g[g.length-1].y});
-            g.push({x: g.length+1, y: g[g.length-1].y});
-        }
+        let g = this.state.data[this.props.selectedTab].weeks;
+        
+        // if (g.length < 5) g.unshift({x:0, y: g[0].y});
+        // if (g.length < 6) {
+        //     //console.log("asd",{x: g.length+1, y: g[g.length-1].y});
+        //     g.push({x: g.length+1, y: g[g.length-1].y});
+        // }
+        //console.log(g);
         return g;
     }
 
@@ -61,7 +72,7 @@ class ChartContainer extends Component {
             <View style={{marginTop: 15}}>
                 {this.state.data.length ?
           <VictoryChart 
-            padding={{ top: 45, bottom: 0, left: -20, right: -20 }}
+            padding={{ top: 45, bottom: 0, left: -10, right: -10 }}
             // containerComponent={<VictoryZoomContainer zoomDomain={{x: [9, 12], y: [0, 10]}}/>}
             >
                 <VictoryArea
@@ -73,8 +84,9 @@ class ChartContainer extends Component {
                       }}
                     interpolation={"monotoneX"}
                     categories={{
-                        x: ["","WEEK 1", "WEEK 2", "WEEK 3", "WEEK 4", ""]
+                        x: ["WEEK 1", "WEEK 2", "WEEK 3", "WEEK 4", ""]
                     }}
+                    domain={{y: [0, 10]}}
                     labels={(d) => d.y}
                     data={this.setData()}
                     events={[{
