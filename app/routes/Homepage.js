@@ -1,6 +1,6 @@
 import React from 'react';
 import {Router, Scene} from "react-native-router-flux";
-import Chart from "./Chart";
+import Statistics from "./Statistics";
 import Settings from "./Settings";
 import {Text} from "react-native";
 
@@ -24,7 +24,7 @@ const HomePage = () => {
                     <Scene key="osu" title="OSU" icon={TabIcon}>
                         <Scene
                             key="scarlet"
-                            component={Chart}
+                            component={Statistics}
                             title="Scarlet"
                         />
                         <Scene

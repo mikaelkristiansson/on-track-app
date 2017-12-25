@@ -26,7 +26,7 @@ class Auth {
             .then((responseData) => {
                 Auth.saveItem('token', responseData.token).then(() => {
                     Auth.saveItem('ttl', String(responseData.expires_in)).then(() => this.checkIfLoggedIn());
-                    Actions.Chart();
+                    Actions.Statistics();
                 });
             });
     }

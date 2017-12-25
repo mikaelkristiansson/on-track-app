@@ -3,7 +3,7 @@ import {Router, Scene} from 'react-native-router-flux';
 import {ActivityIndicator, Text} from 'react-native';
 import Authentication from "./routes/Authentication";
 import Auth from "./auth";
-import Chart from "./routes/Chart";
+import Statistics from "./routes/Statistics";
 import Settings from "./routes/Settings";
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -33,7 +33,7 @@ class App extends Component {
             const TabIcon = ({ focused, title }) => {
                 let icon = '';
                 switch (title) {
-                    case 'Chart':
+                    case 'Statistics':
                         icon = focused ? 'ios-analytics' : 'ios-analytics-outline';
                         break;
                     case 'Settings':
@@ -65,12 +65,12 @@ class App extends Component {
                             showLabel={false} 
                         >
                             {/* Tab and it's scenes */}
-                            <Scene key="Chart" title="Chart" tabBarLabel={"Charts"} icon={TabIcon}>
+                            <Scene key="Statistics" title="Statistics" tabBarLabel={"Statistics"} icon={TabIcon}>
                                 <Scene
                                     hideNavBar={true}
-                                    key="Chart"
-                                    component={Chart}
-                                    title="Chart"
+                                    key="Statistics"
+                                    component={Statistics}
+                                    title="Statistics"
                                 />
                             </Scene>
                             <Scene key="Settings" title="Settings" tabBarLabel={"Settings"} icon={TabIcon}>

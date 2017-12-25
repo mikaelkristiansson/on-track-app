@@ -93,6 +93,13 @@ export default styles = StyleSheet.create({
         textAlign: 'center',
         color: purple
     },
+    h3: {
+        fontSize: 40,
+        textAlign: 'center',
+        paddingBottom: 30,
+        paddingTop: 10,
+        fontWeight: 'bold'
+    },
     h4: {
         fontSize: 20,
         textAlign: 'center',
