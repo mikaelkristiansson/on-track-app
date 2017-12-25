@@ -58,7 +58,7 @@ class App extends Component {
                         <Scene
                             key="tabbar"
                             tabs={true}
-                            tabBarStyle={{ backgroundColor: '#F5FCFF', borderTopColor: "#eee" }}
+                            tabBarStyle={{ backgroundColor: '#fff', borderTopColor: "#eee" }}
                             initial={this.state.hasToken}
                             hideNavBar={true}
                             activeTintColor={"#673AB7"}
