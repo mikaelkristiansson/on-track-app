@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
-import {Router, Scene} from 'react-native-router-flux';
-import {ActivityIndicator, Text} from 'react-native';
+import {Router, Scene, Actions} from 'react-native-router-flux';
+import {ActivityIndicator, Text, View} from 'react-native';
 import Authentication from "./routes/Authentication";
 import Auth from "./auth";
 import Statistics from "./routes/Statistics";
 import Settings from "./routes/Settings";
 import Icon from "react-native-vector-icons/Ionicons";
+import RegisterButton from './components/registerButton';
+import RenderComponent from './components/render';
+
+const purple = "#673AB7";
+const red = "#FA3D4B";
 
 class App extends Component {
     constructor() {
@@ -15,9 +20,6 @@ class App extends Component {
     }
 
     componentWillMount() {
-        /*AsyncStorage.getItem('token').then((token) => {
-            this.setState({ hasToken: token !== null, isLoaded: true });
-        });*/
         this.auth.checkIfLoggedIn()
             .then((token) => {
                 this.setState({hasToken: token !== null, isLoaded: true});
@@ -25,73 +27,20 @@ class App extends Component {
     }
 
     render() {
-        if (!this.state.isLoaded) {
+        if(this.state.isLoaded) {
             return (
-                <ActivityIndicator/>
-            )
+                <RenderComponent hasToken={this.state.hasToken} isLoaded={this.state.isLoaded}/>
+            );
         } else {
-            const TabIcon = ({ focused, title }) => {
-                let icon = '';
-                switch (title) {
-                    case 'Statistics':
-                        icon = focused ? 'ios-analytics' : 'ios-analytics-outline';
-                        break;
-                    case 'Settings':
-                        icon = focused ? 'ios-settings' : 'ios-settings-outline';
-                        break;
-                }
-                let color = focused ? '#673AB7' : '#333';
-                return (
-                    <Text><Icon name={icon} size={36} color={color} /></Text>
-                );
-            };
-            return (
-                <Router>
-                    <Scene key='root'>
-                        <Scene
-                            component={Authentication}
-                            hideNavBar={true}
-                            initial={!this.state.hasToken}
-                            key='Authentication'
-                            title='Authentication'
-                        />
-                        <Scene
-                            key="tabbar"
-                            tabs={true}
-                            tabBarStyle={{ backgroundColor: '#fff', borderTopColor: "#eee" }}
-                            initial={this.state.hasToken}
-                            hideNavBar={true}
-                            activeTintColor={"#673AB7"}
-                            showLabel={false} 
-                        >
-                            {/* Tab and it's scenes */}
-                            <Scene key="Statistics" title="Statistics" tabBarLabel={"Statistics"} icon={TabIcon}>
-                                <Scene
-                                    hideNavBar={true}
-                                    key="Statistics"
-                                    component={Statistics}
-                                    title="Statistics"
-                                />
-                            </Scene>
-                            <Scene key="Settings" title="Settings" tabBarLabel={"Settings"} icon={TabIcon}>
-                                <Scene
-                                    hideNavBar={true}
-                                    key="Settings"
-                                    component={Settings}
-                                    title="Settings"
-                                />
-                            </Scene>
-                        </Scene>
-                        {/*<Scene
-                            component={HomePage}
-                            initial={this.state.hasToken}
-                            hideNavBar={true}
-                            key='HomePage'
-                            title='Home Page'
-                        />*/}
-                    </Scene>
-                </Router>
-            )
+            return <ActivityIndicator
+            color={purple}
+            size="large"
+            style={{flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 80,
+                }}
+        />;
         }
     }
 }

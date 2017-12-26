@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 import { VictoryChart, VictoryArea, VictoryAxis, VictoryScatter } from "victory-native";
 
 class ChartContainer extends Component {
@@ -10,7 +10,7 @@ class ChartContainer extends Component {
         this.weekOfMonth = (0 | dated.getDate() / 7)+1;
         if (this.weekOfMonth === 5) this.weekOfMonth = 4;
         this.currentMonth = dated.getMonth();
-        console.log(this.currentMonth, prop.selectedTab);
+        //console.log(this.currentMonth, prop.selectedTab);
         this.state = {
             data: [],
             loaded: false
@@ -19,6 +19,13 @@ class ChartContainer extends Component {
     }
 
     componentWillMount() {
+        this.setState({
+            data: [],
+            loaded: false
+        });
+    }
+
+    componentDidMount() {
         let months = [];
         this.props.tabs.map(tab => {
             let weeks = [];
@@ -39,7 +46,6 @@ class ChartContainer extends Component {
             month.weeks.unshift({x:0, y: prevMonthWeekValue});
             //TODO: set to the next month first week value
             let nextMonthWeekValue = months[i+1] ? months[i+1].weeks[0].y : 0;
-            console.log(nextMonthWeekValue);
             month.weeks.push({x:5, y: nextMonthWeekValue})
         });
         console.log(months);
@@ -47,7 +53,7 @@ class ChartContainer extends Component {
             data: months,
             loaded: true
         })
-        console.log(months[this.props.selectedTab].weeks);
+        //console.log(months[this.props.selectedTab].weeks);
     }
 
     weeksinMonth(m, y) {
@@ -66,13 +72,13 @@ class ChartContainer extends Component {
             <View style={{marginTop: 15}}>
                 {this.state.loaded ?
           <VictoryChart 
-            padding={{ top: 45, bottom: 0, left: -15, right: -15 }}
+            padding={{ top: 0, bottom: 0, left: -15, right: -15 }}
             // containerComponent={<VictoryZoomContainer zoomDomain={{x: [9, 12], y: [0, 10]}}/>}
             >
                 <VictoryArea
                     style={{
                         data: {
-                          fill: "#FA3D4B", fillOpacity: 0.9, stroke: "#FA3D4B", strokeOpacity: 0.9, strokeWidth: 5
+                          fill: "#FA3D4B", fillOpacity: 0.9, stroke: "#FA3D4B", strokeOpacity: 0.9, strokeWidth: 1
                         },
                         //labels: {fill: "transparent"}
                       }}
@@ -80,8 +86,15 @@ class ChartContainer extends Component {
                     categories={{
                         x: ["WEEK 1", "WEEK 2", "WEEK 3", "WEEK 4"]
                     }}
+                    animate={{
+                        duration: 300,
+                        onLoad: { 
+                            duration: 300, 
+                        }
+                    }}
                     domain={{y: [0, 10]}}
-                    labels={(d) => d.y}
+                    labels={(datum) => String(Math.round(datum.y))}
+                    //labels={(d) => d.y}
                     data={this.setData()}
                     // events={[{
                     //     target: "data",
@@ -133,7 +146,13 @@ class ChartContainer extends Component {
                 <VictoryScatter
                     style={{
                         data: {
-                            fill: "#FA3D4B", fillOpacity: 1, stroke: "#fff", strokeOpacity: .7, strokeWidth: 4
+                            fill: "#FA3D4B", fillOpacity: 1, stroke: "#fff", strokeOpacity: .9, strokeWidth: 7
+                        }
+                    }}
+                    animate={{
+                        duration: 300,
+                        onLoad: { 
+                            duration: 300, 
                         }
                     }}
                     size={9}
@@ -141,7 +160,7 @@ class ChartContainer extends Component {
                 />
     
               </VictoryChart>
-                : <Text>LOADING DATA...</Text> }
+                : <View style={{flex: .4}}><Text>LOADING DATA...</Text></View> }
               </View>
         );
     }

@@ -45,7 +45,7 @@ class Statistics extends Component {
                 { key: '10', title: 'October' },
                 { key: '11', title: 'November' },
                 { key: '12', title: 'December' },
-            ],
+            ]
         };
         this.auth = new Auth();
         this.exercises = new Exercises();
@@ -96,19 +96,6 @@ class Statistics extends Component {
 
     registerActivityModal(visible) {
         this.setState({showRegisterModal: visible});
-    }
-
-    register() {
-        AsyncStorage.getItem('token').then((token) => {
-            this.exercises.create(token)
-                .then((exercise) => {
-                    let newExercise = this.formatDate([exercise])[0];
-                    this.setState({
-                        exercises: [...this.state.exercises, newExercise]
-                    });
-                    this.setAverage();
-                });
-        });
     }
 
     formatDate(objects) {
@@ -197,7 +184,7 @@ class Statistics extends Component {
                 </ScrollView>
                 <Text style={styles.h3}>{this.currentYear}</Text>
                 <TabViewAnimated
-                    style={[styles.tabcontainer]}
+                    style={[styles.tabcontainer, {opacity: this.state.exercises.length ? 1 : 0}]}
                     navigationState={this.state}
                     renderScene={this._renderScene}
                     renderHeader={this._renderHeader}
@@ -208,7 +195,7 @@ class Statistics extends Component {
                     this.state.exercises.length ? 
                     <ChartContainer selectedTab={this.state.index} exercises={this.state.exercises} tabs={this.state.routes} /> 
                     : 
-                    <Text /> 
+                    <View style={{flex: 1.7}}><Text>LOADING DATA...</Text></View> 
                 }
             </View>
         );

@@ -50,7 +50,9 @@ class Auth {
     }
 
     static signOut() {
-        return Promise.resolve(AsyncStorage.removeItem('token'));
+        return Promise.resolve(AsyncStorage.removeItem('token').then(() => {
+            return true;
+        }));
     }
 
     refreshToken() {
