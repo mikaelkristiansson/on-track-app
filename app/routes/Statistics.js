@@ -29,6 +29,8 @@ class Statistics extends Component {
             exercises: [],
             averageWeek: 0,
             averageMonth: 0,
+            averageHalfYear: 0,
+            averageLastMonth: 0,
             showRegisterModal: false,
             refreshing: false,
             index: 0,
@@ -78,7 +80,7 @@ class Statistics extends Component {
             this.setState({
                 index: this.date.getMonth()
             });
-        }, 100);
+        }, 1);
     }
 
     getExercises() {
@@ -99,10 +101,12 @@ class Statistics extends Component {
     }
 
     formatDate(objects) {
-        objects.map((object) => {
-            object.date = moment(object.created_at).format('YYYY-MM-DD HH:mm:ss');
-            object.count = 1;
-        });
+        if(objects) {
+            objects.map((object) => {
+                object.date = moment(object.created_at).format('YYYY-MM-DD HH:mm:ss');
+                object.count = 1;
+            });
+        }
         return objects;
     }
 
@@ -125,27 +129,56 @@ class Statistics extends Component {
     }
 
     setAverage() {
+        let today = moment();
+        let lastMonth =  moment().subtract(1, 'months');
+        let sixMonthsAgo = moment().subtract(6, 'months');
         let exercises = this.state.exercises;
-        let averageMonths = Statistics.calculateAverage(exercises, 'month');
+        let thisMonthExercises = [];
+        let lastMonthExercises = [];
+        let lastSixMonthsExercises = [];
+        exercises.forEach(exercise => {
+            let compareDate = moment(exercise.created_at, 'YYYY-MM-DD');
+            // THIS MONTH
+            let thisStart = moment(today.startOf('month')).format('YYYY-MM-DD');
+            let thisEnd = moment(today.endOf('month')).format('YYYY-MM-DD');
+            if(compareDate.isBetween(thisStart, thisEnd, 'days', true)) {
+                thisMonthExercises.push(exercise);
+            }
+            // LAST MONTH
+            let start = moment(lastMonth.startOf('month')).format('YYYY-MM-DD');
+            let end = moment(lastMonth.endOf('month')).format('YYYY-MM-DD');
+            if(compareDate.isBetween(start, end, 'days', true)) {
+                lastMonthExercises.push(exercise);
+            }
+            // LAST 6 MONTHS
+            if(compareDate.isAfter(moment(sixMonthsAgo.startOf('month')).format('YYYY-MM-DD'))) lastSixMonthsExercises.push(exercise);
+        });
+        //let averageMonths = Statistics.calculateAverage(exercises, 'month');
+        let weeksLastMonth = moment(moment(lastMonth.endOf('month')) - moment(lastMonth.startOf('month'))).weeks();
+        let weeksPassedHalfYear = today.diff(moment().subtract(6, 'months'), 'weeks');
         let averageWeeks = Statistics.calculateAverage(exercises, 'week');
         let passedWeeks = moment().week();
-        let passedMonths = moment().month();
+        //let passedMonths = moment().month();
         this.setState({
-            averageMonth: (Math.floor(Statistics.average(averageMonths)) / passedMonths).toFixed(1),
-            averageWeek: (Math.floor(Statistics.average(averageWeeks)) / passedWeeks).toFixed(1)
+            averageMonth: (thisMonthExercises.length / this.weekOfMonth).toFixed(1),//(Math.floor(Statistics.average(averageMonths)) / passedMonths).toFixed(1),
+            averageWeek: (Math.floor(Statistics.average(averageWeeks)) / passedWeeks).toFixed(1),
+            averageLastMonth: (lastMonthExercises.length / weeksLastMonth).toFixed(1),
+            averageHalfYear: (lastSixMonthsExercises.length / weeksPassedHalfYear).toFixed(1)
         });
     }
 
     _onRefresh() {
-        this.setState({refreshing: true});
+        this.setState({refreshing: true, exercises: []});
         AsyncStorage.getItem('token').then((token) => {
             this.exercises.checkUpdates(token)
                 .then((exercises) => {
                     if(exercises) {
+                        console.log(exercises);
                         exercises = this.formatDate(exercises);
                         this.setState({
                             exercises: exercises
                         });
+                        Actions.refresh({exercises: exercises});
                         this.setAverage();
                     }
                     this.setState({refreshing: false});
@@ -170,11 +203,11 @@ class Statistics extends Component {
                     <View style={{flex: 1, flexDirection: 'row'}}>
                         <View style={{width: "33.3%", paddingLeft: 25}}>
                             <Text style={styles.statsTitle}>Last Month</Text>
-                            <Text style={styles.purpleText}><Text style={styles.statsNumber}>0.8</Text><Text>/week</Text></Text>
+                            <Text style={styles.purpleText}><Text style={styles.statsNumber}>{this.state.averageLastMonth}</Text><Text>/week</Text></Text>
                         </View>
                         <View style={{width: "33.3%", paddingLeft: 25}}>
                             <Text style={styles.statsTitle}>Last 6 Months</Text>
-                            <Text style={styles.purpleText}><Text style={styles.statsNumber}>1.2</Text><Text>/week</Text></Text>
+                            <Text style={styles.purpleText}><Text style={styles.statsNumber}>{this.state.averageHalfYear}</Text><Text>/week</Text></Text>
                         </View>
                         <View style={{width: "33.3%", paddingLeft: 25}}>
                             <Text style={styles.statsTitle}>This Year</Text>
@@ -183,6 +216,7 @@ class Statistics extends Component {
                     </View>
                 </ScrollView>
                 <Text style={styles.h3}>{this.currentYear}</Text>
+                <Text style={styles.sub}>Average current month: {this.state.averageMonth}</Text>
                 <TabViewAnimated
                     style={[styles.tabcontainer, {opacity: this.state.exercises.length ? 1 : 0}]}
                     navigationState={this.state}

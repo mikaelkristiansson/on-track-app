@@ -18,7 +18,7 @@ class RenderComponent extends Component {
         this.state = {
             hasToken: prop.hasToken,
             isLoaded: prop.isLoaded,
-            isAuthenticated: false,
+            isAuthenticated: prop.hasToken,
             newExercises: []
         }
         this.registerExercise = this.registerExercise.bind(this);
@@ -29,11 +29,10 @@ class RenderComponent extends Component {
         AsyncStorage.getItem('token').then((token) => {
             this.exercises.create(token)
                 .then((exercise) => {
-                    console.log(exercise);
                     this.setState({
                         newExercises: [exercise]
                     });
-                    Actions.refresh({newExercises: exercise});
+                    //Actions.refresh({newExercises: exercise});
                 });
         });
     }
@@ -82,7 +81,12 @@ class RenderComponent extends Component {
                                 key="Statistics"
                                 component={Statistics}
                                 title="Statistics"
-                                onEnter={(route) => !this.state.isAuthenticated ? this.setState({isAuthenticated:true}) : '' }
+                                onEnter={(route) => {
+                                    console.log('route:',route, this.state);
+                                    if(!this.state.isAuthenticated) {
+                                        this.setState({isAuthenticated:true});
+                                    }
+                                }}
                             />
                         </Scene>
                         <Scene key="Settings" title="Settings" tabBarLabel={"Settings"} icon={TabIcon}>

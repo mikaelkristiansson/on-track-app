@@ -1,0 +1,7 @@
+{
+  "packagerPort": 8081,
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://2a-fsw.mikaelkristiansson.ontrackapp.exp.direct",
+  "packagerNgrokUrl": "https://packager.2a-fsw.mikaelkristiansson.ontrackapp.exp.direct",
+  "ngrokPid": 18861
+}

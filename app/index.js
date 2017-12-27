@@ -1,12 +1,6 @@
 import React, {Component} from 'react';
-import {Router, Scene, Actions} from 'react-native-router-flux';
-import {ActivityIndicator, Text, View} from 'react-native';
-import Authentication from "./routes/Authentication";
+import {ActivityIndicator} from 'react-native';
 import Auth from "./auth";
-import Statistics from "./routes/Statistics";
-import Settings from "./routes/Settings";
-import Icon from "react-native-vector-icons/Ionicons";
-import RegisterButton from './components/registerButton';
 import RenderComponent from './components/render';
 
 const purple = "#673AB7";

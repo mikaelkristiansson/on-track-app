@@ -96,7 +96,7 @@ export default styles = StyleSheet.create({
     h3: {
         fontSize: 40,
         textAlign: 'center',
-        paddingBottom: 30,
+        paddingBottom: 0,
         paddingTop: 10,
         fontWeight: 'bold'
     },
@@ -105,6 +105,11 @@ export default styles = StyleSheet.create({
         textAlign: 'center',
         paddingBottom: 10,
         paddingTop: 10
+    },
+    sub: {
+        fontStyle: 'italic',
+        color: '#999',
+        paddingBottom: 20
     },
     statsTitle: {
         fontWeight: '500'
