@@ -1,10 +1,4 @@
 {
   "name": "OnTrackApp",
-  "displayName": "OnTrackApp",
-  "expo": {
-    "slug": "OnTrackApp",
-    "name": "OnTrackApp",
-    "sdkVersion": "23.0.0",
-    "entryPoint": "/Users/mikaelkristiansson/Sites/ontrack/OnTrackApp/.vscode/exponentIndex.js"
-  }
+  "displayName": "OnTrackApp"
 }

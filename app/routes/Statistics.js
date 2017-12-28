@@ -27,6 +27,7 @@ class Statistics extends Component {
         this.currentYear = this.date.getFullYear();
         this.state = {
             exercises: [],
+            exercisesLoaded: false,
             averageWeek: 0,
             averageMonth: 0,
             averageHalfYear: 0,
@@ -89,7 +90,8 @@ class Statistics extends Component {
                 .then((exercises) => {
                     exercises = this.formatDate(exercises);
                     this.setState({
-                        exercises: exercises
+                        exercises: exercises,
+                        exercisesLoaded: true
                     });
                     this.setAverage();
                 });
@@ -161,14 +163,14 @@ class Statistics extends Component {
         //let passedMonths = moment().month();
         this.setState({
             averageMonth: (thisMonthExercises.length / this.weekOfMonth).toFixed(1),//(Math.floor(Statistics.average(averageMonths)) / passedMonths).toFixed(1),
-            averageWeek: (Math.floor(Statistics.average(averageWeeks)) / passedWeeks).toFixed(1),
+            averageWeek: (Math.floor(Statistics.average(averageWeeks) || 0) / passedWeeks).toFixed(1),
             averageLastMonth: (lastMonthExercises.length / weeksLastMonth).toFixed(1),
             averageHalfYear: (lastSixMonthsExercises.length / weeksPassedHalfYear).toFixed(1)
         });
     }
 
     _onRefresh() {
-        this.setState({refreshing: true, exercises: []});
+        this.setState({refreshing: true, exercises: [], exercisesLoaded: false});
         AsyncStorage.getItem('token').then((token) => {
             this.exercises.checkUpdates(token)
                 .then((exercises) => {
@@ -176,7 +178,8 @@ class Statistics extends Component {
                         console.log(exercises);
                         exercises = this.formatDate(exercises);
                         this.setState({
-                            exercises: exercises
+                            exercises: exercises,
+                            exercisesLoaded: true
                         });
                         Actions.refresh({exercises: exercises});
                         this.setAverage();
@@ -218,7 +221,7 @@ class Statistics extends Component {
                 <Text style={styles.h3}>{this.currentYear}</Text>
                 <Text style={styles.sub}>Average current month: {this.state.averageMonth}</Text>
                 <TabViewAnimated
-                    style={[styles.tabcontainer, {opacity: this.state.exercises.length ? 1 : 0}]}
+                    style={[styles.tabcontainer, {opacity: this.state.exercisesLoaded ? 1 : 0}]}
                     navigationState={this.state}
                     renderScene={this._renderScene}
                     renderHeader={this._renderHeader}
@@ -226,7 +229,7 @@ class Statistics extends Component {
                     initialLayout={initialLayout}
                 />
                 {
-                    this.state.exercises.length ? 
+                    this.state.exercisesLoaded ? 
                     <ChartContainer selectedTab={this.state.index} exercises={this.state.exercises} tabs={this.state.routes} /> 
                     : 
                     <View style={{flex: 1.7}}><Text>LOADING DATA...</Text></View> 

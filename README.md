@@ -13,5 +13,9 @@ To run your app on Android:
 
 ### Dependables:
 ```
+brew install watchman
 npm install rnpm -g
+npm install -g react-native-cli
+
+react-native link
 ```
