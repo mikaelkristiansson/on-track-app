@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text} from 'react-native';
+import {Text, View} from 'react-native';
 import ActionButton from 'react-native-action-button';
 
 const red = "#FA3D4B";
@@ -17,13 +17,15 @@ class RegisterButton extends Component {
 
     render() {
         return (
+            <View style={{zIndex: 99999999999999, position: 'absolute', bottom: 45}}>
             <ActionButton
                 buttonColor={red} 
                 position="center"
-                offsetY={5}
+                offsetY={-25}
                 hideShadow={true}
                 onPress={this.registerExerciseFromChild}
             />
+            </View>
         );
     }
 }

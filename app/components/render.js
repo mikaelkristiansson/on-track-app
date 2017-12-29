@@ -20,7 +20,7 @@ class RenderComponent extends Component {
             isLoaded: prop.isLoaded,
             isAuthenticated: prop.hasToken,
             newExercises: []
-        }
+        };
         this.registerExercise = this.registerExercise.bind(this);
         this.exercises = new Exercises();
     }

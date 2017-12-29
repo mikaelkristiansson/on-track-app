@@ -7,24 +7,26 @@ import styles from '../styles';
 import logo from '../images/logo.png';
 import Auth from "../auth";
 
-class Authentication extends Component {
+class Login extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        alert(this.props.isAuthenticated);
         this.state = {username: null, password: null};
-        this.auth = new Auth();
+        //this.auth = new Auth();
     }
 
-    userSignUp() {
-        if (!this.state.username || !this.state.password) return;
-        this.auth.signUp(this.state.username, this.state.password)
-            .catch(() => alert('Something went wrong'));
-    }
+    // userSignUp() {
+    //     if (!this.state.username || !this.state.password) return;
+    //     this.auth.signUp(this.state.username, this.state.password)
+    //         .catch(() => alert('Something went wrong'));
+    // }
 
     userLogin() {
         if (!this.state.username || !this.state.password) return;
-        this.auth.signIn(this.state.username, this.state.password)
-            .catch(() => Auth.signOut().then(() => alert('Something went wrong')));
+        this.props.onLogin({ username: this.state.username, password: this.state.password });
+        // this.auth.signIn(this.state.username, this.state.password)
+        //     .catch(() => Auth.signOut().then(() => alert('Something went wrong')));
     }
 
     render() {
@@ -63,14 +65,10 @@ class Authentication extends Component {
                     <TouchableOpacity style={styles.buttonWrapper} onPress={this.userLogin.bind(this)}>
                         <Text style={styles.buttonText}> Log In </Text>
                     </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.buttonWrapper} onPress={this.userSignUp.bind(this)}>
-                        <Text style={styles.buttonText}> Sign Up </Text>
-                    </TouchableOpacity>
                 </View>
             </View>
         );
     }
 }
 
-export default Authentication;
+export default Login;

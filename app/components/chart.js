@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import { VictoryChart, VictoryArea, VictoryAxis, VictoryScatter } from "victory-native";
+import { colors } from "../helpers/colors";
 
 class ChartContainer extends Component {
 
@@ -10,11 +11,10 @@ class ChartContainer extends Component {
         this.weekOfMonth = (0 | dated.getDate() / 7)+1;
         if (this.weekOfMonth === 5) this.weekOfMonth = 4;
         this.currentMonth = dated.getMonth();
-        //console.log(this.currentMonth, prop.selectedTab);
         this.state = {
             data: [],
             loaded: false
-        }
+        };
 
     }
 
@@ -41,19 +41,15 @@ class ChartContainer extends Component {
             months[month].weeks[week-1].y = months[month].weeks[week-1].y !== 0 ? months[month].weeks[week-1].y+1 : 1;
         });
         months.forEach((month, i) => {
-            //TODO: set to the previous month last week value
             let prevMonthWeekValue = months[i-1] ? months[i-1].weeks[4].y : 0;
             month.weeks.unshift({x:0, y: prevMonthWeekValue});
-            //TODO: set to the next month first week value
             let nextMonthWeekValue = months[i+1] ? months[i+1].weeks[0].y : 0;
-            month.weeks.push({x:5, y: nextMonthWeekValue})
+            month.weeks.push({x:5, y: nextMonthWeekValue});
         });
-        console.log(months);
         this.setState({
             data: months,
             loaded: true
-        })
-        //console.log(months[this.props.selectedTab].weeks);
+        });
     }
 
     weeksinMonth(m, y) {
@@ -63,8 +59,7 @@ class ChartContainer extends Component {
     }
 
     setData() {
-        let g = this.state.data[this.props.selectedTab].weeks;
-        return g;
+        return this.state.data[this.props.selectedTab].weeks;
     }
 
     render() {
@@ -78,7 +73,7 @@ class ChartContainer extends Component {
                 <VictoryArea
                     style={{
                         data: {
-                          fill: "#FA3D4B", fillOpacity: 0.9, stroke: "#FA3D4B", strokeOpacity: 0.9, strokeWidth: 1
+                          fill: colors.red, fillOpacity: 0.9, stroke: colors.red, strokeOpacity: 0.9, strokeWidth: 1
                         },
                         //labels: {fill: "transparent"}
                       }}

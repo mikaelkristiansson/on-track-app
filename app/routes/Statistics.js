@@ -7,11 +7,12 @@ import {API_URL} from 'react-native-dotenv';
 import {Actions} from 'react-native-router-flux';
 import styles from '../styles';
 import moment from "moment";
-import Auth from "../auth";
 import Exercises from "../api/exercises";
 import { VictoryChart, VictoryArea, VictoryZoomContainer, VictoryBrushContainer, VictoryAxis, VictoryTheme, VictoryScatter, VictoryTooltip } from "victory-native";
 import { TabViewAnimated, TabBar } from "react-native-tab-view";
 import ChartContainer from '../components/chart';
+
+import { colors } from '../helpers/colors';
 
 const initialLayout = {
     height: 0,
@@ -50,7 +51,6 @@ class Statistics extends Component {
                 { key: '12', title: 'December' },
             ]
         };
-        this.auth = new Auth();
         this.exercises = new Exercises();
     }
 
@@ -85,7 +85,7 @@ class Statistics extends Component {
     }
 
     getExercises() {
-        AsyncStorage.getItem('token').then((token) => {
+        AsyncStorage.getItem('api/token').then((token) => {
             this.exercises.getAll(token)
                 .then((exercises) => {
                     exercises = this.formatDate(exercises);
@@ -114,7 +114,7 @@ class Statistics extends Component {
 
     static calculateAverage(elements, duration) {
         const formatted = elements.map(elem => {
-            return {date: moment(elem.date).startOf(duration).format('YYYY-MM-DD'), count: elem.count}
+            return {date: moment(elem.date).startOf(duration).format('YYYY-MM-DD'), count: elem.count};
         });
 
         const dates = formatted.map(elem => elem.date);
@@ -122,7 +122,7 @@ class Statistics extends Component {
 
         return uniqueDates.map(date => {
             const count = formatted.filter(elem => elem.date === date).reduce((count) => count + 1, 0);
-            return {date, count}
+            return {date, count};
         });
     }
 
@@ -197,7 +197,7 @@ class Statistics extends Component {
                         <RefreshControl
                             refreshing={this.state.refreshing}
                             onRefresh={this._onRefresh.bind(this)}
-                            tintColor={"#673AB7"}
+                            tintColor={colors.purple}
                             title="Loading exercises..."
                         />
                     }
