@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native';
-import auth from "../auth/index";
+import moment from 'moment';
+import auth from '../auth/index';
 
 class UserStore {
 
@@ -14,8 +15,8 @@ class UserStore {
     await AsyncStorage.setItem('api/credentials', JSON.stringify({ username, password }));
   };
 
-  saveToken = async (token = '') => {
-    await AsyncStorage.setItem('api/token', JSON.stringify({ token }));
+  saveToken = async (token = '', expires_at = 0) => {
+    await AsyncStorage.setItem('api/token', JSON.stringify({ token, expires_at }));
   };
 
   loadToken = async () => {
@@ -24,8 +25,16 @@ class UserStore {
     return parsed.token || {};
   };
 
+  loadExpiresAt = async () => {
+    const values = await AsyncStorage.getItem('api/token');
+    if (!values) return false;
+    const parsed = JSON.parse(values);
+    return parsed.expires_at || 0;
+  };
+
   remove = async () => {
     await AsyncStorage.removeItem('api/credentials');
+    await AsyncStorage.removeItem('api/token');
   };
 
   getUserData = () => new Promise((resolve, reject) => {
@@ -40,16 +49,16 @@ class UserStore {
     if (username && password) {
       this.save(username, password);
     }
-
-    const { user, token } = await auth.signIn(username, password);
-    if (!token) return false;
-    this.token = token;
-    this.saveToken(token);
-    this.username = user.username;
-    //const { firstName, lastName } = await this.getUserData();
-    // this.firstName = firstName;
-    // this.lastName = lastName;
-    // this.email = email;
+    let now = moment().format('YYYY-MM-DD HH:mm:ss');
+    const willExpireAt = await this.loadExpiresAt() || moment().subtract(5, 'minutes').format('YYYY-MM-DD HH:mm:ss');
+    if(moment(willExpireAt).isBefore(now)) {
+      const { user, token, expires_in } = await auth.signIn(username, password);
+      if (!token) return false;
+      this.expiresAt = moment().add(parseInt(expires_in), 'seconds').format('YYYY-MM-DD HH:mm:ss');
+      this.token = token;
+      this.saveToken(token, String(this.expiresAt));
+      this.username = user.username;     
+    }
     return true;
   };
 

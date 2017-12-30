@@ -3,7 +3,7 @@ import {
   StatusBar,
   ActivityIndicator,
 } from 'react-native';
-import { colors } from "../helpers/colors";
+import { colors } from '../helpers/colors';
 
 /* Component ==================================================================== */
 export default class Launch extends Component {
