@@ -7,12 +7,14 @@ import userStore from './stores/userStore';
 
 import Launch from './routes/Launch';
 import Login from './routes/Login';
+import SignUp from './routes/SignUp';
 import Statistics from './routes/Statistics';
 import Settings from './routes/Settings';
 import Register from './routes/Register';
 import Exercises from './api/exercises';
 
 import { colors } from './helpers/colors';
+import AppConfig from './helpers/constants';
 
 class App extends Component {
 
@@ -64,7 +66,7 @@ class App extends Component {
       <Router {...this.state}>
         <Lightbox>
           <Scene component={Launch} on={userStore.load} hideNavBar success="doCheck" failure="loginForm" />
-          <Stack>
+          <Stack {...AppConfig.navbarProps}>
             <Scene
               key="login"
               component={Login}
@@ -75,8 +77,8 @@ class App extends Component {
               onForgotPassword="passwordReset"
               hideNavBar={true}
             />
-            {/* <Scene key="signUp" component={SignUp} title="Sign Up" />
-                        <Scene key="passwordReset" component={PasswordReset} title="Password Reset" /> */}
+            <Scene key="signUp" component={SignUp} title="Sign Up" />
+            {/* <Scene key="passwordReset" component={PasswordReset} title="Password Reset" /> */}
             <Scene key="app" type="reset" tabs showLabel={false} hideNavBar={true} tabBarStyle={{ backgroundColor: colors.tabBackground, borderTopColor: colors.tabBorder }}>
               <Scene key="Statistics" title="Statistics" tabBarLabel={'Statistics'} icon={TabIcon}>
                 <Scene

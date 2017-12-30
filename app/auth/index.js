@@ -1,53 +1,53 @@
 // noinspection JSUnresolvedVariable
 import {API_URL} from 'react-native-dotenv';
 import {Actions} from 'react-native-router-flux';
-import {AsyncStorage} from "react-native";
+import {AsyncStorage} from 'react-native';
 
 class Auth {
-    constructor() {
-        this.header = new Headers({
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        });
-        this.base = `${API_URL}/auth`;
-        this.api = `${API_URL}/api`;
-    }
+  constructor() {
+    this.header = new Headers({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    });
+    this.base = `${API_URL}/auth`;
+    this.api = `${API_URL}/api`;
+  }
 
     signIn = async (username, password) => {
-        return fetch(`${this.base}/sign_in`, {
-            method: 'POST',
-            headers: this.header,
-            body: JSON.stringify({
-                username: username,
-                password: password,
-            })
+      return fetch(`${this.base}/sign_in`, {
+        method: 'POST',
+        headers: this.header,
+        body: JSON.stringify({
+          username: username,
+          password: password,
         })
-            .then((response) => response.json());
-            // .then((responseData) => {
-            //     Auth.saveItem('token', responseData.token).then(() => {
-            //         Auth.saveItem('ttl', String(responseData.expires_in)).then(() => this.checkIfLoggedIn());
-            //         Actions.Statistics();
-            //     });
-            // });
+      })
+        .then((response) => response.json());
+      // .then((responseData) => {
+      //     Auth.saveItem('token', responseData.token).then(() => {
+      //         Auth.saveItem('ttl', String(responseData.expires_in)).then(() => this.checkIfLoggedIn());
+      //         Actions.Statistics();
+      //     });
+      // });
     };
 
-    // signUp(username, password) {
-    //     return fetch(`${this.base}/sign_up`, {
-    //         method: 'POST',
-    //         headers: this.header,
-    //         body: JSON.stringify({
-    //             username: username,
-    //             password: password,
-    //         })
-    //     })
-    //         .then((response) => response.json())
-    //         .then((responseData) => {
-    //             Auth.saveItem('token', responseData.token).then(() => {
-    //                 Auth.saveItem('ttl', String(responseData.expires_in)).then(() => this.checkIfLoggedIn());
-    //                 Actions.Statistics();
-    //             });
-    //         });
-    // }
+    signUp = async (username, password) => {
+      return fetch(`${this.base}/sign_up`, {
+        method: 'POST',
+        headers: this.header,
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        })
+      })
+        .then((response) => response.json());
+      // .then((responseData) => {
+      //   Auth.saveItem('token', responseData.token).then(() => {
+      //     Auth.saveItem('ttl', String(responseData.expires_in)).then(() => this.checkIfLoggedIn());
+      //     Actions.Statistics();
+      //   });
+      // });
+    }
 
     // static signOut() {
     //     return Promise.resolve(AsyncStorage.removeItem('token').then(() => {

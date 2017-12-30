@@ -62,7 +62,9 @@ class UserStore {
     return true;
   };
 
-  signUp = async ({ email, password, firstName, lastName }) => {
+  signUp = async ({ username, password, firstName, lastName }) => {
+    const user = await auth.signUp(username, password);
+    this.save(username, password);
     // if (Firebase === null) {
     //   throw ErrorMessages.invalidFirebase;
     // }

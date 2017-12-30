@@ -1,22 +1,26 @@
 import React, {Component} from 'react';
-import {Image, Text, TextInput, TouchableOpacity, View, Button} from 'react-native';
+import {Image, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {API_URL} from 'react-native-dotenv';
 import {Actions} from 'react-native-router-flux';
 import styles from '../styles';
-import { colors } from '../helpers/colors';
 
 import logo from '../images/logo.png';
 
-class Login extends Component {
+class SignUp extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {username: null, password: null};
+    this.state = {username: null, password: null, firstName: null, lastName: null};
   }
 
-  userLogin() {
+  userSignUp() {
     if (!this.state.username || !this.state.password) return;
-    this.props.onLogin({ username: this.state.username, password: this.state.password });
+    Actions.doSignUp({
+      username: this.state.username,
+      password: this.state.password,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+    });  
   }
 
   render() {
@@ -46,20 +50,18 @@ class Login extends Component {
             placeholder='Password'
             ref='password'
             returnKeyType='go'
-            onSubmitEditing={() => this.userLogin()}
             secureTextEntry={true}
             style={styles.inputText}
             value={this.state.password}
           />
 
-          <TouchableOpacity style={styles.buttonWrapper} onPress={this.userLogin.bind(this)}>
-            <Text style={styles.buttonText}> Log In </Text>
+          <TouchableOpacity style={styles.buttonWrapper} onPress={this.userSignUp.bind(this)}>
+            <Text style={styles.buttonText}> Sign Up </Text>
           </TouchableOpacity>
-          <Button color={colors.purple} outlined title={'Sign Up'} onPress={this.props.onSignUp} />
         </View>
       </View>
     );
   }
 }
 
-export default Login;
+export default SignUp;
