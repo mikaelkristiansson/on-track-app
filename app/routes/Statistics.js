@@ -168,10 +168,10 @@ class Statistics extends Component {
       if(compareDate.isAfter(moment(sixMonthsAgo.startOf('month')).format('YYYY-MM-DD'))) lastSixMonthsExercises.push(exercise);
     });
     //let averageMonths = Statistics.calculateAverage(exercises, 'month');
-    let weeksLastMonth = moment(moment(lastMonth.endOf('month')) - moment(lastMonth.startOf('month'))).weeks();
+    let weeksLastMonth = moment(moment(lastMonth.endOf('month')) - moment(lastMonth.startOf('month'))).isoWeeks();
     let weeksPassedHalfYear = today.diff(moment().subtract(6, 'months'), 'weeks');
     let averageWeeks = Statistics.calculateAverage(exercises, 'week');
-    let passedWeeks = moment().week();
+    let passedWeeks = moment().isoWeek();
     //let passedMonths = moment().month();
     this.setState({
       averageMonth: (thisMonthExercises.length / this.weekOfMonth).toFixed(1),//(Math.floor(Statistics.average(averageMonths)) / passedMonths).toFixed(1),
