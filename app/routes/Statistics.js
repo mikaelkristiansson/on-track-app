@@ -13,6 +13,7 @@ import { TabViewAnimated, TabBar } from "react-native-tab-view";
 import ChartContainer from '../components/chart';
 
 import { colors } from '../helpers/colors';
+import userStore from '../stores/userStore';
 
 const initialLayout = {
     height: 0,
@@ -85,7 +86,7 @@ class Statistics extends Component {
     }
 
     getExercises() {
-        AsyncStorage.getItem('api/token').then((token) => {
+        userStore.loadToken().then((token) => {
             this.exercises.getAll(token)
                 .then((exercises) => {
                     exercises = this.formatDate(exercises);
@@ -96,6 +97,17 @@ class Statistics extends Component {
                     this.setAverage();
                 });
         });
+        // AsyncStorage.getItem('api/token').then((token) => {
+        //     this.exercises.getAll(token)
+        //         .then((exercises) => {
+        //             exercises = this.formatDate(exercises);
+        //             this.setState({
+        //                 exercises: exercises,
+        //                 exercisesLoaded: true
+        //             });
+        //             this.setAverage();
+        //         });
+        // });
     }
 
     registerActivityModal(visible) {
@@ -171,7 +183,7 @@ class Statistics extends Component {
 
     _onRefresh() {
         this.setState({refreshing: true, exercises: [], exercisesLoaded: false});
-        AsyncStorage.getItem('token').then((token) => {
+        userStore.loadToken().then((token) => {
             this.exercises.checkUpdates(token)
                 .then((exercises) => {
                     if(exercises) {

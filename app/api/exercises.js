@@ -17,7 +17,7 @@ class Exercises {
         })
             .then((response) => {
                 if (response.ok) return response.json();
-                Auth.signOut();
+                //Auth.signOut();
             });
     }
 
@@ -31,7 +31,7 @@ class Exercises {
         })
             .then((response) => {
                 if (response.ok) return response.json();
-                Auth.signOut();
+                //Auth.signOut();
             });
     }
 
@@ -49,7 +49,7 @@ class Exercises {
         })
             .then((response) => {
                 if (response.ok) return response.json();
-                Auth.signOut();
+                //Auth.signOut();
             });
     }
 }

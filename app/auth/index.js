@@ -4,22 +4,19 @@ import {Actions} from 'react-native-router-flux';
 import {AsyncStorage} from "react-native";
 
 class Auth {
-    // constructor() {
-    //     this.header = new Headers({
-    //         'Accept': 'application/json',
-    //         'Content-Type': 'application/json'
-    //     });
-    //     this.base = `${API_URL}/auth`;
-    //     this.api = `${API_URL}/api`;
-    // }
+    constructor() {
+        this.header = new Headers({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        });
+        this.base = `${API_URL}/auth`;
+        this.api = `${API_URL}/api`;
+    }
 
     signIn = async (username, password) => {
-        return fetch(`${API_URL}/auth/sign_in`, {
+        return fetch(`${this.base}/sign_in`, {
             method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
+            headers: this.header,
             body: JSON.stringify({
                 username: username,
                 password: password,

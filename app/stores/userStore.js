@@ -18,6 +18,12 @@ class UserStore {
     await AsyncStorage.setItem('api/token', JSON.stringify({ token }));
   };
 
+  loadToken = async () => {
+    const values = await AsyncStorage.getItem('api/token');
+    const parsed = JSON.parse(values);
+    return parsed.token || {};
+  };
+
   remove = async () => {
     await AsyncStorage.removeItem('api/credentials');
   };

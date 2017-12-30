@@ -11,7 +11,6 @@ class Login extends Component {
 
     constructor(props) {
         super(props);
-        alert(this.props.isAuthenticated);
         this.state = {username: null, password: null};
         //this.auth = new Auth();
     }

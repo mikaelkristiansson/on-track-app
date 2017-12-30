@@ -3,6 +3,7 @@ import {
   StatusBar,
   ActivityIndicator,
 } from 'react-native';
+import { colors } from "../helpers/colors";
 
 /* Component ==================================================================== */
 export default class Launch extends Component {
@@ -23,7 +24,7 @@ export default class Launch extends Component {
       }}
       animating
       size={'large'}
-      color={'#C1C5C8'}
+      color={colors.red}
     />
   );
 }

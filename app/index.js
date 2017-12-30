@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Router, Scene, Lightbox, Stack} from 'react-native-router-flux';
+import {Router, Scene, Lightbox, Stack, Actions} from 'react-native-router-flux';
 import {Text, View, AsyncStorage} from 'react-native';
 // import {ActivityIndicator} from 'react-native';
 // import Auth from "./auth";
@@ -25,20 +25,27 @@ class App extends Component {
             newExercises: []
         };
         this.registerExercise = this.registerExercise.bind(this);
+        this.test = this.test.bind(this);
         this.exercises = new Exercises();
     }
 
     registerExercise() {
-        AsyncStorage.getItem('api/token').then((token) => {
-            alert(token);
+        userStore.loadToken().then((token) => {
             this.exercises.create(token)
                 .then((exercise) => {
-                    this.setState({
-                        newExercises: [exercise]
-                    });
+                    // this.setState({
+                    //     newExercises: [exercise]
+                    // });
+                    //Actions.pop();
+                    Actions.app();
                     //Actions.refresh({newExercises: exercise});
                 });
         });
+    }
+
+    test() {
+        //alert('ttt');
+        Actions.pop();
     }
 
     render() {
@@ -82,6 +89,7 @@ class App extends Component {
                         <Scene key="app" type="reset" tabs showLabel={false} hideNavBar={true} tabBarStyle={{ backgroundColor: colors.tabBackground, borderTopColor: colors.tabBorder }}>
                             <Scene key="Statistics" title="Statistics" tabBarLabel={'Statistics'} icon={TabIcon}>
                                 <Scene
+                                    hideNavBar={true}
                                     icon={TabIcon}
                                     key="Statistics"
                                     component={Statistics}
@@ -94,13 +102,14 @@ class App extends Component {
                                     key="Register"
                                     component={Register}
                                     title="Register"
-                                    registerExercise={this.registerExercise}
+                                    onEnter={this.registerExercise}
+                                    //registerExercise={this.registerExercise}
                                     //hideTabBar={true}
                                 />
                             </Scene>
                             <Scene key="Settings" title="Settings" tabBarLabel={"Settings"} icon={TabIcon}>
                                 <Scene
-                                    hideNavBar={false}
+                                    hideNavBar={true}
                                     key="Settings"
                                     component={Settings}
                                     title="Settings"

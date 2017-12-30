@@ -27,15 +27,15 @@ export default class Register extends Component {
   }
 
   componentDidMount() {
-    Animated.timing(this.state.offset, {
-      duration: 150,
-      toValue: 0
-    }).start();
+    // Animated.timing(this.state.offset, {
+    //   duration: 150,
+    //   toValue: 0
+    // }).start();
   }
 
   closeModal() {
-    this.props.registerExercise();
-    Actions.pop();
+    //this.props.registerExercise();
+    //Actions.pop();
     // Animated.timing(this.state.offset, {
     //   duration: 150,
     //   toValue: -deviceHeight
@@ -44,19 +44,20 @@ export default class Register extends Component {
 
   render() {
     return (
-      <Animated.View style={[styles.container, { backgroundColor: 'rgba(52,52,52,0.5)' }]}>
-        <View style={{
-          width: 250,
-          height: 250,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: 'white',
-          borderRadius: 5
-        }}>
-          <Text>asd</Text>
-          <Button onPress={this.closeModal.bind(this)} title="Close"/>
-        </View>
-      </Animated.View>
+      <View />
+      // <Animated.View style={[styles.container, { backgroundColor: 'rgba(52,52,52,0.5)' }]}>
+      //   <View style={{
+      //     width: 250,
+      //     height: 250,
+      //     justifyContent: 'center',
+      //     alignItems: 'center',
+      //     backgroundColor: 'white',
+      //     borderRadius: 5
+      //   }}>
+      //     <Text>asd</Text>
+      //     <Button onPress={this.closeModal.bind(this)} title="Close"/>
+      //   </View>
+      // </Animated.View>
     );
   }
 }
