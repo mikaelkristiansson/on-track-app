@@ -11,6 +11,7 @@ class ChartContainer extends Component {
     this.weekOfMonth = (0 | dated.getDate() / 7)+1;
     if (this.weekOfMonth === 5) this.weekOfMonth = 4;
     this.currentMonth = dated.getMonth();
+    this.currentYear = dated.getFullYear();
     this.state = {
       data: [],
       loaded: false
@@ -128,7 +129,7 @@ class ChartContainer extends Component {
                   size: 15
                 },
                 tickLabels: {
-                  fill: (tick) => (this.props.selectedTab === this.currentMonth && tick === this.weekOfMonth) ? '#FA3D4B' : '#D0D1D5',
+                  fill: (tick) => (this.currentYear === this.props.selectedYear && this.props.selectedTab === this.currentMonth && tick === this.weekOfMonth) ? '#FA3D4B' : '#D0D1D5',
                   //fontFamily: "inherit",
                   fontSize: 14
                 }

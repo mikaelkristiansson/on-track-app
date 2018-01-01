@@ -195,7 +195,9 @@ class Statistics extends Component {
             exercises = this.formatDate(exercises);
             this.setState({
               exercises: exercises,
-              exercisesLoaded: true
+              exercisesLoaded: true,
+              selectedYear: this.currentYear,
+              index: this.date.getMonth()
             });
             Actions.refresh({exercises: exercises});
             this.setAverage();
