@@ -117,5 +117,18 @@ export default styles = StyleSheet.create({
   statsNumber: {
     fontSize: 26,
     fontWeight: '600'
+  },
+  pickerModalContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  pickerButtonContainer: {
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    padding: 6,
+    backgroundColor: '#ececec',
+  },
+  modalPicker: {
+    backgroundColor: '#fff'
   }
 });

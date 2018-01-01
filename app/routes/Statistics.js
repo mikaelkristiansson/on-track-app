@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
-  ScrollView, Text, TouchableOpacity, View, Modal, TouchableHighlight, AsyncStorage,
-  RefreshControl, Dimensions
+  ScrollView, Text, TouchableOpacity, View, Modal, TouchableWithoutFeedback, AsyncStorage,
+  RefreshControl, Dimensions, Picker
 } from 'react-native';
 import {API_URL} from 'react-native-dotenv';
 import {Actions} from 'react-native-router-flux';
@@ -34,7 +34,7 @@ class Statistics extends Component {
       averageMonth: 0,
       averageHalfYear: 0,
       averageLastMonth: 0,
-      showRegisterModal: false,
+      modalVisible: false,
       refreshing: false,
       index: 0,
       routes: [
@@ -50,7 +50,10 @@ class Statistics extends Component {
         { key: '10', title: 'October' },
         { key: '11', title: 'November' },
         { key: '12', title: 'December' },
-      ]
+      ],
+      selectedYear: this.date.getFullYear(),
+      availableYears: [{'label': '2017', value: 2017},
+        {'label': '2018', value: 2018}]
     };
     this.exercises = new Exercises();
   }
@@ -97,21 +100,22 @@ class Statistics extends Component {
           this.setAverage();
         });
     });
-    // AsyncStorage.getItem('api/token').then((token) => {
-    //     this.exercises.getAll(token)
-    //         .then((exercises) => {
-    //             exercises = this.formatDate(exercises);
-    //             this.setState({
-    //                 exercises: exercises,
-    //                 exercisesLoaded: true
-    //             });
-    //             this.setAverage();
-    //         });
-    // });
   }
 
-  registerActivityModal(visible) {
-    this.setState({showRegisterModal: visible});
+  updateYear(year) {
+    this.setState({selectedYear: year, exercises: [], exercisesLoaded: false});
+    const formated = String(`${year}-01-01`);
+    userStore.loadToken().then((token) => {
+      this.exercises.getYear(token, formated)
+        .then((exercises) => {
+          exercises = this.formatDate(exercises);
+          this.setState({
+            exercises: exercises,
+            exercisesLoaded: true
+          });
+          //this.setAverage();
+        });
+    });
   }
 
   formatDate(objects) {
@@ -214,7 +218,7 @@ class Statistics extends Component {
             />
           }
         >
-          <Text style={styles.h4}>{'Your Exercise Log'.toUpperCase()}</Text>
+          <Text style={styles.h4}>{'Your Exercise Log '.toUpperCase() + this.currentYear}</Text>
           <View style={{flex: 1, flexDirection: 'row'}}>
             <View style={{width: '33.3%', paddingLeft: 25}}>
               <Text style={styles.statsTitle}>Last Month</Text>
@@ -230,7 +234,11 @@ class Statistics extends Component {
             </View>
           </View>
         </ScrollView>
-        <Text style={styles.h3}>{this.currentYear}</Text>
+        <TouchableOpacity
+          onPress={() => this.setState({ modalVisible: true })}
+        >
+          <Text style={styles.h3}>{this.state.selectedYear}</Text>
+        </TouchableOpacity>
         <Text style={styles.sub}>Average current month: {this.state.averageMonth}</Text>
         <TabViewAnimated
           style={[styles.tabcontainer, {opacity: this.state.exercisesLoaded ? 1 : 0}]}
@@ -242,10 +250,41 @@ class Statistics extends Component {
         />
         {
           this.state.exercisesLoaded ? 
-            <ChartContainer selectedTab={this.state.index} exercises={this.state.exercises} tabs={this.state.routes} /> 
+            <ChartContainer selectedYear={this.state.selectedYear} selectedTab={this.state.index} exercises={this.state.exercises} tabs={this.state.routes} /> 
             : 
             <View style={{flex: 1.7}}><Text>LOADING DATA...</Text></View> 
         }
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.modalVisible}>
+          <TouchableWithoutFeedback
+            onPress={() => this.setState({ modalVisible: false })}>
+            <View style={styles.pickerModalContainer}>
+              <View style={styles.pickerButtonContainer}>
+                <Text
+                  style={{ color: colors.red }}
+                  onPress={() => this.setState({ modalVisible: false })}>
+                    Done
+                </Text>
+              </View>
+              <View>
+                <Picker
+                  style={styles.modalPicker}
+                  selectedValue={this.state.selectedYear}
+                  onValueChange={(itemValue, itemIndex) => this.updateYear(itemValue)}>
+                  {this.state.availableYears.map((i, index) => (
+                    <Picker.Item
+                      key={index}
+                      label={i.label}
+                      value={i.value}
+                    />
+                  ))}
+                </Picker>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
       </View>
     );
   }
