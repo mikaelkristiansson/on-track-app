@@ -176,7 +176,7 @@ class Statistics extends Component {
 
   _onRefresh() {
     this.setState({refreshing: true, exercises: [], exercisesLoaded: false});
-    exerciseStore.get().then((exercises) => {
+    exerciseStore.get(this.currentYear).then((exercises) => {
       if(exercises) {
         //exercises = this.formatDate(exercises);
         this.setState({
