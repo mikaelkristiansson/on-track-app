@@ -39,7 +39,6 @@ package-lock.json
 
 .vscode/
 .expo/
-app/settings.json
 
 # BUCK
 buck-out/
