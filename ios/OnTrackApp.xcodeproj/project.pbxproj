@@ -23,7 +23,7 @@
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		20D77A1ABD7049B786702BFC /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A520411AA32D4D22AD5E1257 /* Foundation.ttf */; };
-		21AB84A21FFCE46D00A1DD85 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21AB84A11FFCE46D00A1DD85 /* GoogleService-Info.plist */; };
+		21D23B4B1FFD91C900512124 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21D23B4A1FFD91C800512124 /* GoogleService-Info.plist */; };
 		2C95822F0DB34D90A64BE7BF /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67F5CCC84A6A4D818D916B7E /* MaterialIcons.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -394,7 +394,7 @@
 		1B6255CB38CB4EFDB5DF4CA6 /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
 		1F3541D0C87C4CF9BDDA0628 /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
 		2132BFB87DA64F2DB09B0B94 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
-		21AB84A11FFCE46D00A1DD85 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		21D23B4A1FFD91C800512124 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "OnTrackApp/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		266947FD555846FB9F78545A /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* OnTrackApp-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OnTrackApp-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* OnTrackApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "OnTrackApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -584,13 +584,13 @@
 		13B07FAE1A68108700A75B9A /* OnTrackApp */ = {
 			isa = PBXGroup;
 			children = (
+				21D23B4A1FFD91C800512124 /* GoogleService-Info.plist */,
 				DA2DDACF1FCEA350004DFFB6 /* OnTrackApp.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				21AB84A11FFCE46D00A1DD85 /* GoogleService-Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -1313,7 +1313,7 @@
 				511907B03B194EB0AE39013D /* Octicons.ttf in Resources */,
 				1262403A23E5436381DA352F /* SimpleLineIcons.ttf in Resources */,
 				7C7C6686D1594B3F83F4763C /* Zocial.ttf in Resources */,
-				21AB84A21FFCE46D00A1DD85 /* GoogleService-Info.plist in Resources */,
+				21D23B4B1FFD91C900512124 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
