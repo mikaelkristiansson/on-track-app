@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import { VictoryChart, VictoryArea, VictoryAxis, VictoryScatter } from 'victory-native';
 import { colors } from '../helpers/colors';
+import moment from 'moment';
 
 class ChartContainer extends Component {
 
@@ -35,9 +36,9 @@ class ChartContainer extends Component {
     });
 
     this.props.exercises.map(exercise => {
-      let d = new Date(exercise.created_at);
-      let month = d.getMonth();
-      let week = (0 | d.getDate() / 7)+1;
+      const d = moment(exercise.created_at);
+      let month = d.month();
+      let week = (0 | d.date() / 7)+1;
       if (week === 5) week = 4;
       months[month].weeks[week-1].y = months[month].weeks[week-1].y !== 0 ? months[month].weeks[week-1].y+1 : 1;
     });

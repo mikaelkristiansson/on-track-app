@@ -99,9 +99,7 @@ class Statistics extends Component {
 
   updateYear(year) {
     this.setState({selectedYear: year, exercises: [], exercisesLoaded: false});
-    //const formated = String(`${year}-01-01`);
     exerciseStore.get(year).then((exercises) => {
-      //exercises = this.formatDate(exercises);
       this.setState({
         exercises: exercises,
         exercisesLoaded: true
