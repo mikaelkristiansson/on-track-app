@@ -3,7 +3,6 @@ import {
   ScrollView, Text, TouchableOpacity, View, Modal, TouchableWithoutFeedback, AsyncStorage,
   RefreshControl, Dimensions, Picker
 } from 'react-native';
-import {API_URL} from 'react-native-dotenv';
 import {Actions} from 'react-native-router-flux';
 import styles from '../styles';
 import moment from 'moment';
