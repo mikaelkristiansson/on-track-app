@@ -7,13 +7,13 @@ import {API_URL} from 'react-native-dotenv';
 import {Actions} from 'react-native-router-flux';
 import styles from '../styles';
 import moment from 'moment';
-import Exercises from '../api/exercises';
+//import Exercises from '../api/exercises';
 import { VictoryChart, VictoryArea, VictoryZoomContainer, VictoryBrushContainer, VictoryAxis, VictoryTheme, VictoryScatter, VictoryTooltip } from 'victory-native';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 import ChartContainer from '../components/chart';
 
 import { colors } from '../helpers/colors';
-import userStore from '../stores/userStore';
+import exerciseStore from '../stores/exerciseStore';
 
 const initialLayout = {
   height: 0,
@@ -55,14 +55,13 @@ class Statistics extends Component {
       availableYears: [{'label': '2017', value: 2017},
         {'label': '2018', value: 2018}]
     };
-    this.exercises = new Exercises();
   }
 
     _handleIndexChange = index => {
       this.setState({
         index: index
       });
-    }
+    };
 
   _renderHeader = props => (
     <TabBar
@@ -75,9 +74,7 @@ class Statistics extends Component {
     />
   );
 
-  _renderScene = ({ route }) => {
-    
-  };
+  _renderScene = ({ route }) => {};
 
   componentDidMount() {
     this.getExercises();
@@ -88,33 +85,27 @@ class Statistics extends Component {
     }, 1);
   }
 
-  getExercises() {
-    userStore.loadToken().then((token) => {
-      this.exercises.getAll(token)
-        .then((exercises) => {
-          exercises = this.formatDate(exercises);
-          this.setState({
-            exercises: exercises,
-            exercisesLoaded: true
-          });
-          this.setAverage();
-        });
+  getExercises() { 
+    exerciseStore.get(this.currentYear).then((exercises) => {
+      console.log('exercises: ',exercises);
+      //exercises = this.formatDate(exercises);
+      this.setState({
+        exercises: exercises,
+        exercisesLoaded: true
+      });
+      this.setAverage();
     });
   }
 
   updateYear(year) {
     this.setState({selectedYear: year, exercises: [], exercisesLoaded: false});
-    const formated = String(`${year}-01-01`);
-    userStore.loadToken().then((token) => {
-      this.exercises.getYear(token, formated)
-        .then((exercises) => {
-          exercises = this.formatDate(exercises);
-          this.setState({
-            exercises: exercises,
-            exercisesLoaded: true
-          });
-          //this.setAverage();
-        });
+    //const formated = String(`${year}-01-01`);
+    exerciseStore.get(year).then((exercises) => {
+      //exercises = this.formatDate(exercises);
+      this.setState({
+        exercises: exercises,
+        exercisesLoaded: true
+      });
     });
   }
 
@@ -130,15 +121,15 @@ class Statistics extends Component {
 
   static calculateAverage(elements, duration) {
     const formatted = elements.map(elem => {
-      return {date: moment(elem.date).startOf(duration).format('YYYY-MM-DD'), count: elem.count};
+      return {created_at: moment(elem.created_at).startOf(duration).format('YYYY-MM-DD'), count: elem.count};
     });
 
-    const dates = formatted.map(elem => elem.date);
-    const uniqueDates = dates.filter((date, index) => dates.indexOf(date) === index);
+    const dates = formatted.map(elem => elem.created_at);
+    const uniqueDates = dates.filter((created_at, index) => dates.indexOf(created_at) === index);
 
-    return uniqueDates.map(date => {
-      const count = formatted.filter(elem => elem.date === date).reduce((count) => count + 1, 0);
-      return {date, count};
+    return uniqueDates.map(created_at => {
+      const count = formatted.filter(elem => elem.created_at === created_at).reduce((count) => count + 1, 0);
+      return {created_at, count};
     });
   }
 
@@ -187,23 +178,19 @@ class Statistics extends Component {
 
   _onRefresh() {
     this.setState({refreshing: true, exercises: [], exercisesLoaded: false});
-    userStore.loadToken().then((token) => {
-      this.exercises.checkUpdates(token)
-        .then((exercises) => {
-          if(exercises) {
-            console.log(exercises);
-            exercises = this.formatDate(exercises);
-            this.setState({
-              exercises: exercises,
-              exercisesLoaded: true,
-              selectedYear: this.currentYear,
-              index: this.date.getMonth()
-            });
-            Actions.refresh({exercises: exercises});
-            this.setAverage();
-          }
-          this.setState({refreshing: false});
+    exerciseStore.get().then((exercises) => {
+      if(exercises) {
+        //exercises = this.formatDate(exercises);
+        this.setState({
+          exercises: exercises,
+          exercisesLoaded: true,
+          selectedYear: this.currentYear,
+          index: this.date.getMonth()
         });
+        Actions.refresh({exercises: exercises});
+        this.setAverage();
+      }
+      this.setState({refreshing: false});
     });
   }
 

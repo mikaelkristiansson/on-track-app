@@ -4,6 +4,7 @@ import {Text, View, AsyncStorage} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import userStore from './stores/userStore';
+import exerciseStore from './stores/exerciseStore';
 
 import Launch from './routes/Launch';
 import Login from './routes/Login';
@@ -11,10 +12,9 @@ import SignUp from './routes/SignUp';
 import Statistics from './routes/Statistics';
 import Settings from './routes/Settings';
 import Register from './routes/Register';
-import Exercises from './api/exercises';
 
 import { colors } from './helpers/colors';
-import AppConfig from './helpers/constants';
+import { AppConfig } from './helpers';
 
 class App extends Component {
 
@@ -24,20 +24,16 @@ class App extends Component {
       newExercises: []
     };
     this.registerExercise = this.registerExercise.bind(this);
-    this.exercises = new Exercises();
   }
 
   registerExercise() {
-    userStore.loadToken().then((token) => {
-      this.exercises.create(token)
-        .then((exercise) => {
-          // this.setState({
-          //     newExercises: [exercise]
-          // });
-          //Actions.pop();
-          Actions.app();
-          //Actions.refresh({newExercises: exercise});
-        });
+    exerciseStore.save().then((exercise) => {
+      // this.setState({
+      //     newExercises: [exercise]
+      // });
+      //Actions.pop();
+      Actions.app();
+      //Actions.refresh({newExercises: exercise});
     });
   }
 

@@ -11,12 +11,12 @@ class Login extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {username: null, password: null};
+    this.state = {email: null, password: null};
   }
 
   userLogin() {
-    if (!this.state.username || !this.state.password) return;
-    this.props.onLogin({ username: this.state.username, password: this.state.password });
+    if (!this.state.email || !this.state.password) return;
+    this.props.onLogin({ email: this.state.email, password: this.state.password });
   }
 
   render() {
@@ -28,16 +28,16 @@ class Login extends Component {
         <View style={styles.form}>
           <TextInput
             editable={true}
-            onChangeText={(username) => this.setState({username})}
-            placeholder='Username'
-            ref='username'
+            onChangeText={(email) => this.setState({email})}
+            placeholder='Email'
+            ref='email'
             returnKeyType={'next'}
             autoCapitalize={'none'}
             autoCorrect={false}
             keyboardType={'email-address'}
             onSubmitEditing={() => this.refs.password.focus()}
             style={styles.inputText}
-            value={this.state.username}
+            value={this.state.email}
           />
 
           <TextInput

@@ -10,13 +10,13 @@ class SignUp extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {username: null, password: null, firstName: null, lastName: null};
+    this.state = {email: null, password: null, firstName: null, lastName: null};
   }
 
   userSignUp() {
-    if (!this.state.username || !this.state.password) return;
+    if (!this.state.email || !this.state.password || !this.state.firstName || !this.state.lastName) return;
     Actions.doSignUp({
-      username: this.state.username,
+      email: this.state.email,
       password: this.state.password,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
@@ -32,16 +32,40 @@ class SignUp extends Component {
         <View style={styles.form}>
           <TextInput
             editable={true}
-            onChangeText={(username) => this.setState({username})}
-            placeholder='Username'
-            ref='username'
+            onChangeText={(email) => this.setState({email})}
+            placeholder='email'
+            ref='email'
             returnKeyType={'next'}
             autoCapitalize={'none'}
             autoCorrect={false}
             keyboardType={'email-address'}
+            onSubmitEditing={() => this.refs.firstName.focus()}
+            style={styles.inputText}
+            value={this.state.email}
+          />
+
+          <TextInput
+            editable={true}
+            onChangeText={(firstName) => this.setState({firstName})}
+            placeholder='first name'
+            ref='firstName'
+            returnKeyType={'next'}
+            autoCorrect={false}
+            onSubmitEditing={() => this.refs.lastName.focus()}
+            style={styles.inputText}
+            value={this.state.firstName}
+          />
+
+          <TextInput
+            editable={true}
+            onChangeText={(lastName) => this.setState({lastName})}
+            placeholder='last name'
+            ref='lastName'
+            returnKeyType={'next'}
+            autoCorrect={false}
             onSubmitEditing={() => this.refs.password.focus()}
             style={styles.inputText}
-            value={this.state.username}
+            value={this.state.lastName}
           />
 
           <TextInput
