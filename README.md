@@ -7,6 +7,7 @@
 
 To run your app on iOS:
    react-native run-ios
+   react-native run-ios --simulator="iPhone X"
    - or -
    Open ios/OnTrackApp.xcworkspace in Xcode
    Hit the Run button
