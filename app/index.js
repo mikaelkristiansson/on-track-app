@@ -71,9 +71,10 @@ class App extends Component {
               onLogin="doAuth"
               onSignUp="signUp"
               onForgotPassword="passwordReset"
-              hideNavBar={true}
+              hideNavBar
+              title="SIGN IN"
             />
-            <Scene key="signUp" component={SignUp} title="Sign Up" />
+            <Scene key="signUp" type="reset" component={SignUp} hideNavBar title="Sign Up" />
             {/* <Scene key="passwordReset" component={PasswordReset} title="Password Reset" /> */}
             <Scene key="app" type="reset" tabs showLabel={false} hideNavBar={true} tabBarStyle={{ backgroundColor: colors.tabBackground, borderTopColor: colors.tabBorder }}>
               <Scene key="Statistics" title="Statistics" tabBarLabel={'Statistics'} icon={TabIcon}>

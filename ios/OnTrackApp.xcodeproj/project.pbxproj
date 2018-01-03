@@ -50,7 +50,6 @@
 		AA708A5DC4D5430499C9E63C /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49C7AA5A7CA84E2D95EEF70B /* libRNSVG.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		D443EEE6BB874577A3651227 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F8ED6B36FD424E6E951018D2 /* Ionicons.ttf */; };
-		DA2DDAD21FCEA350004DFFB6 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA2DDAD11FCEA350004DFFB6 /* HealthKit.framework */; };
 		DA2DDAD51FCEFD1A004DFFB6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		EE4236AF7F5EC1932812BF61 /* libPods-OnTrackApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9096DCBE7454636BCBAE7871 /* libPods-OnTrackApp.a */; };
 		F40DBE7BE1CFD7B59F1F5C25 /* libPods-OnTrackAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF327C8FA69BAAC7F1082C5B /* libPods-OnTrackAppTests.a */; };
@@ -421,7 +420,6 @@
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		D3D022E6ED32414B85606B97 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		DA2DDACF1FCEA350004DFFB6 /* OnTrackApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = OnTrackApp.entitlements; path = OnTrackApp/OnTrackApp.entitlements; sourceTree = "<group>"; };
-		DA2DDAD11FCEA350004DFFB6 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		E7B35F97A9B84E0A9BFA9016 /* libRNGestureHandler.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNGestureHandler.a; sourceTree = "<group>"; };
 		F8ED6B36FD424E6E951018D2 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		FF327C8FA69BAAC7F1082C5B /* libPods-OnTrackAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OnTrackAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -452,7 +450,6 @@
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
-				DA2DDAD21FCEA350004DFFB6 /* HealthKit.framework in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				AA708A5DC4D5430499C9E63C /* libRNSVG.a in Frameworks */,
@@ -739,7 +736,6 @@
 		DA2DDAD01FCEA350004DFFB6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DA2DDAD11FCEA350004DFFB6 /* HealthKit.framework */,
 				9096DCBE7454636BCBAE7871 /* libPods-OnTrackApp.a */,
 				3D770F2AA656373592CB467B /* libPods-OnTrackApp-tvOS.a */,
 				9AB25CCB8EA82D9A20E4E5C3 /* libPods-OnTrackApp-tvOSTests.a */,
@@ -884,7 +880,7 @@
 						DevelopmentTeam = 7UT63G26BX;
 						SystemCapabilities = {
 							com.apple.HealthKit = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.Maps.iOS = {
 								enabled = 0;
@@ -1609,7 +1605,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = OnTrackApp/OnTrackApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 7UT63G26BX;
@@ -1622,6 +1617,7 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = OnTrackApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1639,7 +1635,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = OnTrackApp/OnTrackApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7UT63G26BX;
 				HEADER_SEARCH_PATHS = (
@@ -1651,6 +1646,7 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = OnTrackApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Image, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Image, Text, TextInput, TouchableOpacity, View, Button} from 'react-native';
 import {API_URL} from 'react-native-dotenv';
 import {Actions} from 'react-native-router-flux';
 import styles from '../styles';
+import { AppColors } from '../theme';
 
 import logo from '../images/logo.png';
 
@@ -27,19 +28,19 @@ class SignUp extends Component {
     return (
       <View style={styles.container}>
         <Image source={logo} style={styles.logo}/>
-        <Text style={styles.title}> On Track </Text>
+        <Text style={styles.title}> ON TRACK </Text>
 
         <View style={styles.form}>
           <TextInput
             editable={true}
             onChangeText={(email) => this.setState({email})}
-            placeholder='email'
-            ref='email'
+            placeholder='Email'
+            ref='signEmail'
             returnKeyType={'next'}
             autoCapitalize={'none'}
             autoCorrect={false}
             keyboardType={'email-address'}
-            onSubmitEditing={() => this.refs.firstName.focus()}
+            onSubmitEditing={() => this.refs.signFirstName.focus()}
             style={styles.inputText}
             value={this.state.email}
           />
@@ -47,11 +48,11 @@ class SignUp extends Component {
           <TextInput
             editable={true}
             onChangeText={(firstName) => this.setState({firstName})}
-            placeholder='first name'
-            ref='firstName'
+            placeholder='First name'
+            ref='signFirstName'
             returnKeyType={'next'}
             autoCorrect={false}
-            onSubmitEditing={() => this.refs.lastName.focus()}
+            onSubmitEditing={() => this.refs.signLastName.focus()}
             style={styles.inputText}
             value={this.state.firstName}
           />
@@ -59,11 +60,11 @@ class SignUp extends Component {
           <TextInput
             editable={true}
             onChangeText={(lastName) => this.setState({lastName})}
-            placeholder='last name'
-            ref='lastName'
+            placeholder='Last name'
+            ref='signLastName'
             returnKeyType={'next'}
             autoCorrect={false}
-            onSubmitEditing={() => this.refs.password.focus()}
+            onSubmitEditing={() => this.refs.signPassword.focus()}
             style={styles.inputText}
             value={this.state.lastName}
           />
@@ -72,7 +73,7 @@ class SignUp extends Component {
             editable={true}
             onChangeText={(password) => this.setState({password})}
             placeholder='Password'
-            ref='password'
+            ref='signPassword'
             returnKeyType='go'
             secureTextEntry={true}
             style={styles.inputText}
@@ -80,8 +81,13 @@ class SignUp extends Component {
           />
 
           <TouchableOpacity style={styles.buttonWrapper} onPress={this.userSignUp.bind(this)}>
-            <Text style={styles.buttonText}> Sign Up </Text>
+            <Text style={styles.buttonText}> SIGN UP </Text>
           </TouchableOpacity>
+          <Button
+            title="Back to Sign in"
+            color={AppColors.brand.secondary}
+            onPress={() => Actions.pop()}
+          />
         </View>
       </View>
     );

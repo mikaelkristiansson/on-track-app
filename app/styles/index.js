@@ -17,14 +17,20 @@ export default styles = StyleSheet.create({
   },
   buttonText: {
     fontFamily: 'Avenir',
-    fontSize: 20,
+    fontSize: 16,
     padding: 10,
+    width: '100%',
     textAlign: 'center',
-    color: colors.purple
+    fontWeight: '700',
+    backgroundColor: colors.purple,
+    color: '#fff',
+    borderRadius: 20,
+    overflow: 'hidden'
   },
   buttonWrapper: {
     //backgroundColor:'#D3D3D3',
     marginBottom: 10,
+    marginTop: 10,
     width: 300,
     borderRadius: 100,
     alignItems: 'center',

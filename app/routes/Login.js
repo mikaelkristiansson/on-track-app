@@ -3,7 +3,7 @@ import {Image, Text, TextInput, TouchableOpacity, View, Button} from 'react-nati
 import {API_URL} from 'react-native-dotenv';
 import {Actions} from 'react-native-router-flux';
 import styles from '../styles';
-import { colors } from '../helpers/colors';
+import { AppColors } from '../theme';
 
 import logo from '../images/logo.png';
 
@@ -23,7 +23,7 @@ class Login extends Component {
     return (
       <View style={styles.container}>
         <Image source={logo} style={styles.logo}/>
-        <Text style={styles.title}> On Track </Text>
+        <Text style={styles.title}> ON TRACK </Text>
 
         <View style={styles.form}>
           <TextInput
@@ -53,9 +53,9 @@ class Login extends Component {
           />
 
           <TouchableOpacity style={styles.buttonWrapper} onPress={this.userLogin.bind(this)}>
-            <Text style={styles.buttonText}> Log In </Text>
+            <Text style={styles.buttonText}> SIGN IN </Text>
           </TouchableOpacity>
-          <Button color={colors.purple} outlined title={'Sign Up'} onPress={this.props.onSignUp} />
+          <Button color={AppColors.brand.secondary} outlined title={'Sign Up'} onPress={this.props.onSignUp} />
         </View>
       </View>
     );

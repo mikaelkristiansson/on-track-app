@@ -13,7 +13,7 @@ class Settings extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.buttonWrapper} onPress={this.userLogOut}>
-          <Text style={styles.buttonText}> Log out </Text>
+          <Text style={styles.buttonText}> SIGN OUT </Text>
         </TouchableOpacity>
       </View>
     );
