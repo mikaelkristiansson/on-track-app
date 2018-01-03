@@ -1,13 +1,16 @@
 ## On Track App
 
+<img src="./printscreens/01.png" width="300" />
+<img src="./printscreens/02.png" width="300" />
+<img src="./printscreens/03.png" width="300" />
+<img src="./printscreens/04.png" width="300" />
+
 To run your app on iOS:
-   cd /Users/mikaelkristiansson/Sites/ontrack/OnTrackApp
    react-native run-ios
    - or -
-   Open ios/OnTrackApp.xcodeproj in Xcode
+   Open ios/OnTrackApp.xcworkspace in Xcode
    Hit the Run button
 To run your app on Android:
-   cd /Users/mikaelkristiansson/Sites/ontrack/OnTrackApp
    Have an Android emulator running (quickest way to get started), or a device connected
    react-native run-android
 
@@ -16,6 +19,13 @@ To run your app on Android:
 brew install watchman
 npm install rnpm -g
 npm install -g react-native-cli
+sudo gem install cocoapods
+```
 
+### Install:
+```
+npm i
+cd ios && pod install && cd ..
 react-native link
+cd app && touch settings.json
 ```
