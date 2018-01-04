@@ -6,12 +6,19 @@ import {
 import {Actions} from 'react-native-router-flux';
 import styles from '../styles';
 import moment from 'moment';
-//import Exercises from '../api/exercises';
 import { VictoryChart, VictoryArea, VictoryZoomContainer, VictoryBrushContainer, VictoryAxis, VictoryTheme, VictoryScatter, VictoryTooltip } from 'victory-native';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
+
+// COMPONENTS
 import ChartContainer from '../components/chart';
 
-import { colors } from '../helpers/colors';
+// HELPERS
+import { AppConstants } from '../helpers';
+
+// THEME
+import { AppColors } from '../theme';
+
+// API
 import exerciseStore from '../stores/exerciseStore';
 
 const initialLayout = {
@@ -36,20 +43,7 @@ class Statistics extends Component {
       modalVisible: false,
       refreshing: false,
       index: 0,
-      routes: [
-        { key: '1', title: 'January' },
-        { key: '2', title: 'February' },
-        { key: '3', title: 'Mars' },
-        { key: '4', title: 'April' },
-        { key: '5', title: 'May' },
-        { key: '6', title: 'June' },
-        { key: '7', title: 'July' },
-        { key: '8', title: 'August' },
-        { key: '9', title: 'September' },
-        { key: '10', title: 'October' },
-        { key: '11', title: 'November' },
-        { key: '12', title: 'December' },
-      ],
+      routes: AppConstants.months,
       selectedYear: this.date.getFullYear(),
       availableYears: [{'label': '2017', value: 2017},
         {'label': '2018', value: 2018}]
@@ -199,7 +193,7 @@ class Statistics extends Component {
             <RefreshControl
               refreshing={this.state.refreshing}
               onRefresh={this._onRefresh.bind(this)}
-              tintColor={colors.purple}
+              tintColor={AppColors.brand.secondary}
               title="Loading exercises..."
             />
           }
@@ -249,7 +243,7 @@ class Statistics extends Component {
             <View style={styles.pickerModalContainer}>
               <View style={styles.pickerButtonContainer}>
                 <Text
-                  style={{ color: colors.red }}
+                  style={{ color: AppColors.brand.primary }}
                   onPress={() => this.setState({ modalVisible: false })}>
                     Done
                 </Text>

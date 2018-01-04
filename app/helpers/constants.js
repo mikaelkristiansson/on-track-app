@@ -1,30 +1,16 @@
-import { AppColors, AppStyles } from '../theme';
-
 export default {
-
-  // Build Configuration - eg. Debug or Release?
-  DEV: __DEV__,
-
-  // Google Analytics - uses a 'dev' account while we're testing
-  // gaTrackingId: (__DEV__) ? 'UA-84284256-2' : 'UA-84284256-1',
-
-  // URLs
-  urls: {
-  },
-
-  // Navbar Props
-  navbarProps: {
-    //hideNavBar: true,
-    titleStyle: AppStyles.navbarTitle,
-    navigationBarStyle: AppStyles.navbar,
-    // leftButtonIconStyle: AppStyles.navbarButton,
-    // leftButtonStyle: AppStyles.navbarButton,
-    // leftButtonTextStyle: AppStyles.navbarButton,
-    navBarButtonColor: '#fff',
-    //rightButtonIconStyle: AppStyles.navbarButton,
-    sceneStyle: {
-      //backgroundColor: AppColors.background,
-      //paddingTop: AppSizes.navbarHeight,
-    },
-  },
+  months: [
+    { key: '1', title: 'January' },
+    { key: '2', title: 'February' },
+    { key: '3', title: 'Mars' },
+    { key: '4', title: 'April' },
+    { key: '5', title: 'May' },
+    { key: '6', title: 'June' },
+    { key: '7', title: 'July' },
+    { key: '8', title: 'August' },
+    { key: '9', title: 'September' },
+    { key: '10', title: 'October' },
+    { key: '11', title: 'November' },
+    { key: '12', title: 'December' }
+  ]
 };

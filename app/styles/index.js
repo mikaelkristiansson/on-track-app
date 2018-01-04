@@ -22,7 +22,7 @@ export default styles = StyleSheet.create({
     width: '100%',
     textAlign: 'center',
     fontWeight: '700',
-    backgroundColor: colors.purple,
+    backgroundColor: colors.red,
     color: '#fff',
     borderRadius: 20,
     overflow: 'hidden'
@@ -35,10 +35,10 @@ export default styles = StyleSheet.create({
     borderRadius: 100,
     alignItems: 'center',
     borderWidth: 2,
-    borderColor: colors.purple
+    borderColor: colors.red
   },
   buttonContainer: {
-    backgroundColor: colors.purple,
+    backgroundColor: colors.red,
     borderRadius: 100,
     paddingVertical: 10,
     paddingHorizontal: 15,

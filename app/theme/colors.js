@@ -12,7 +12,7 @@ const brand = {
 };
   
 const text = {
-  textPrimary: '#222222',
+  textPrimary: '#15182D',//'#222222',
   textSecondary: '#777777',
   headingPrimary: brand.brand.primary,
   headingSecondary: brand.brand.primary,
@@ -25,9 +25,16 @@ const borders = {
 const tabbar = {
   tabbar: {
     background: '#ffffff',
-    iconDefault: '#BABDC2',
-    iconSelected: brand.brand.primary,
+    border: '#eee',
+    iconDefault: '#BABDC2', //'#333'
+    iconSelected: '#444',
+    iconMiddleBg: brand.brand.primary,
+    iconMiddleColor: '#fff'
   },
+};
+
+const indicator = {
+  spinner: '#ffffff'
 };
   
 export default {
@@ -36,5 +43,6 @@ export default {
   ...text,
   ...borders,
   ...tabbar,
+  ...indicator,
 };
   

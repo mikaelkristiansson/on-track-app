@@ -1,5 +1,6 @@
-import AppConfig from './constants';
+import AppConfig from './configs';
 import ErrorMessages from './errors';
 import Firebase, { FirebaseRef } from './firebase';
+import AppConstants from './constants';
 
-export { AppConfig, ErrorMessages, Firebase, FirebaseRef };
+export { AppConfig, AppConstants, ErrorMessages, Firebase, FirebaseRef };
