@@ -6,6 +6,7 @@ import { Gravatar } from 'react-native-gravatar';
 import { TextField } from 'react-native-material-textfield';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicon from 'react-native-vector-icons/Ionicons';
 
 import { AppColors } from '../theme';
 
@@ -17,20 +18,60 @@ class Settings extends Component {
     super();
     this.state = {
       editable: false,
-      editIcon: 'account-edit'
+      email: userStore.email, 
+      firstName: userStore.firstName, 
+      lastName: userStore.lastName
     };
   }
 
-  toggleEdit(editable) {
+  toggleEdit() {
     this.setState({
-      editable: editable ? false : true,
-      editIcon: editable ? 'account-edit' : 'account-off'
+      editable: !this.state.editable,
+      email: userStore.email, 
+      firstName: userStore.firstName, 
+      lastName: userStore.lastName
+    });
+    setTimeout(() => {
+      this.refs.firstName.focus();
+    },100);
+  }
+
+  updateProfile(email, firstName, lastName) {
+    userStore.update({ email: email, firstName: firstName, lastName: lastName });
+    this.setState({
+      editable: false,
     });
   }
 
   userLogOut() {
     userStore.logout();
     Actions.logout();
+  }
+
+  _renderSave() {
+    if (this.state.editable) {
+      return (
+        <View style={[styles.rightContent, {marginBottom: 20}]}>
+          <TouchableOpacity style={styles.smallButtonWrapper} onPress={() => this.updateProfile(this.state.email, this.state.firstName, this.state.lastName)}>
+            <Text style={styles.smallButtonText}> SAVE </Text>
+          </TouchableOpacity>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  }
+
+  _renderIcon() {
+    if(!this.state.editable) {
+      return (
+        <Icon name={'account-edit'} size={28} color={AppColors.tabbar.iconSelected} />
+      );
+    } else {
+      return (
+        <Ionicon name={'ios-close-circle-outline'} size={28} color={AppColors.tabbar.iconSelected} />
+      );
+    }
   }
 
   render() {
@@ -49,31 +90,43 @@ class Settings extends Component {
         <ScrollView style={styles.profile}>
           <TouchableOpacity
             style={{alignSelf: 'flex-end'}}
-            onPress={() => this.toggleEdit(this.state.editable)}
+            onPress={() => this.toggleEdit()}
           >
-            <Icon name={this.state.editIcon} size={26} />
+            {this._renderIcon()}
           </TouchableOpacity>
           <TextField
-            label='FULL NAME'
+            label='FIRST NAME'
             baseColor={AppColors.textSecondary}
             tintColor={AppColors.brand.secondary}
             editable={this.state.editable}
-            value={userStore.firstName + ' ' + userStore.lastName}
-            ref={'fullName'}
+            value={this.state.firstName}
+            onChangeText={(firstName) => this.setState({firstName})}
+            ref={'firstName'}
+          />
+          <TextField
+            label='LAST NAME'
+            baseColor={AppColors.textSecondary}
+            tintColor={AppColors.brand.secondary}
+            editable={this.state.editable}
+            value={this.state.lastName}
+            onChangeText={(lastName) => this.setState({lastName})}
+            ref={'lastName'}
           />
           <TextField
             label='EMAIL'
             baseColor={AppColors.textSecondary}
             tintColor={AppColors.brand.secondary}
             editable={this.state.editable}
-            value={userStore.email}
+            onChangeText={(email) => this.setState({email})}
+            value={this.state.email}
           />
-          <TextField
+          {/* <TextField
             label='DEFAULT EXERCISE TYPE'
             baseColor={AppColors.textSecondary}
             tintColor={AppColors.brand.secondary}
             editable={this.state.editable}
-          />
+          /> */}
+          {this._renderSave()}
         </ScrollView>
         <View style={[styles.centerContent, {marginBottom: 20}]}>
           <TouchableOpacity style={styles.buttonWrapper} onPress={this.userLogOut}>

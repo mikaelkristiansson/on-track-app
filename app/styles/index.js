@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import { colors } from '../helpers/colors';
+import { AppColors } from '../theme/index';
 
 export default styles = StyleSheet.create({
   container: {
@@ -19,6 +20,9 @@ export default styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  rightContent: {
+    alignItems: 'flex-end'
+  },
   buttonText: {
     fontFamily: 'Avenir',
     fontSize: 16,
@@ -36,6 +40,28 @@ export default styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
     width: 300,
+    borderRadius: 100,
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: colors.red
+  },
+  smallButtonText: {
+    fontFamily: 'Avenir',
+    fontSize: 16,
+    padding: 5,
+    //width: '100%',
+    textAlign: 'center',
+    fontWeight: '700',
+    //backgroundColor: colors.red,
+    color: colors.red,//'#fff',
+    borderRadius: 15,
+    overflow: 'hidden'
+  },
+  smallButtonWrapper: {
+    //backgroundColor:'#D3D3D3',
+    marginBottom: 10,
+    marginTop: 10,
+    width: 100,
     borderRadius: 100,
     alignItems: 'center',
     borderWidth: 2,
@@ -150,6 +176,8 @@ export default styles = StyleSheet.create({
     padding: 10,
     marginTop: 20,
     paddingTop: 0,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: AppColors.border
     //flexDirection: 'row'
   },
   profileName: {

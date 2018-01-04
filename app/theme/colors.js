@@ -19,7 +19,7 @@ const text = {
 };
   
 const borders = {
-  border: '#D0D1D5',
+  border: '#BABDC2'//'#D0D1D5',
 };
   
 const tabbar = {
