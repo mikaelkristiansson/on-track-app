@@ -15,6 +15,10 @@ export default styles = StyleSheet.create({
   bold: {
     fontWeight: 'bold'
   },
+  centerContent: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   buttonText: {
     fontFamily: 'Avenir',
     fontSize: 16,
@@ -136,5 +140,30 @@ export default styles = StyleSheet.create({
   },
   modalPicker: {
     backgroundColor: '#fff'
+  },
+  settings: {
+    flex: 1,
+    backgroundColor: '#FFF',
+    paddingTop: 60
+  },
+  profile: {
+    padding: 10,
+    marginTop: 20,
+    paddingTop: 0,
+    //flexDirection: 'row'
+  },
+  profileName: {
+    fontWeight: '400',
+    fontSize: 20,
+    fontFamily: 'Avenir',
+    justifyContent: 'center', 
+    alignItems: 'center' 
+  },
+  roundedProfileImage: {
+    width:120,
+    height:120,
+    borderWidth:3,
+    borderColor: '#fff',
+    borderRadius:60,
   }
 });

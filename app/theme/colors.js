@@ -13,7 +13,7 @@ const brand = {
   
 const text = {
   textPrimary: '#15182D',//'#222222',
-  textSecondary: '#777777',
+  textSecondary: '#BABDC2',//'#777777',
   headingPrimary: brand.brand.primary,
   headingSecondary: brand.brand.primary,
 };
