@@ -7,13 +7,14 @@ const app = {
 const brand = {
   brand: {
     primary: '#fa3d4b',//'#0E4EF8',
-    secondary: '#673ab7',//'#17233D',
+    secondary: '#673ab7'//'#17233D',
   },
 };
   
 const text = {
   textPrimary: '#15182D',//'#222222',
   textSecondary: '#BABDC2',//'#777777',
+  textThirdly: '#D0D1D5',
   headingPrimary: brand.brand.primary,
   headingSecondary: brand.brand.primary,
 };

@@ -43,7 +43,6 @@ class Settings extends Component {
   }
 
   userLogOut() {
-    userStore.logout();
     Actions.logout();
   }
 

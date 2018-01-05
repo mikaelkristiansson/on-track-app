@@ -130,8 +130,10 @@ class ChartContainer extends Component {
                   size: 15
                 },
                 tickLabels: {
-                  fill: (tick) => (this.currentYear === this.props.selectedYear && this.props.selectedTab === this.currentMonth && tick === this.weekOfMonth) ? '#FA3D4B' : '#D0D1D5',
-                  //fontFamily: "inherit",
+                  fill: (tick) => (this.currentYear === this.props.selectedYear && 
+                                  this.props.selectedTab === this.currentMonth && 
+                                  tick === this.weekOfMonth) ? 
+                                  AppColors.brand.primary : AppColors.textThirdly,
                   fontSize: 14
                 }
               }}
@@ -139,7 +141,7 @@ class ChartContainer extends Component {
             <VictoryScatter
               style={{
                 data: {
-                  fill: '#FA3D4B', fillOpacity: 1, stroke: '#fff', strokeOpacity: .9, strokeWidth: 7
+                  fill: AppColors.brand.primary, fillOpacity: 1, stroke: '#fff', strokeOpacity: .9, strokeWidth: 7
                 }
               }}
               animate={{
