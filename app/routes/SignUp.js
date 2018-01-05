@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Image, Text, TextInput, TouchableOpacity, View, Button} from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import { TextField } from 'react-native-material-textfield';
 import styles from '../styles';
 import { AppColors } from '../theme';
 
@@ -30,53 +31,45 @@ class SignUp extends Component {
         <Text style={styles.title}> ON TRACK </Text>
 
         <View style={styles.form}>
-          <TextInput
-            editable={true}
+          <TextField
+            {...this.props.inputProps}
             onChangeText={(email) => this.setState({email})}
-            placeholder='Email'
+            label='EMAIL'
             ref='signEmail'
             returnKeyType={'next'}
             autoCapitalize={'none'}
             autoCorrect={false}
             keyboardType={'email-address'}
             onSubmitEditing={() => this.refs.signFirstName.focus()}
-            style={styles.inputText}
-            value={this.state.email}
           />
 
-          <TextInput
-            editable={true}
+          <TextField
+            {...this.props.inputProps}
             onChangeText={(firstName) => this.setState({firstName})}
-            placeholder='First name'
+            label='FIRST NAME'
             ref='signFirstName'
             returnKeyType={'next'}
             autoCorrect={false}
             onSubmitEditing={() => this.refs.signLastName.focus()}
-            style={styles.inputText}
-            value={this.state.firstName}
           />
 
-          <TextInput
-            editable={true}
+          <TextField
+            {...this.props.inputProps}
             onChangeText={(lastName) => this.setState({lastName})}
-            placeholder='Last name'
+            label='LAST NAME'
             ref='signLastName'
             returnKeyType={'next'}
             autoCorrect={false}
             onSubmitEditing={() => this.refs.signPassword.focus()}
-            style={styles.inputText}
-            value={this.state.lastName}
           />
 
-          <TextInput
-            editable={true}
+          <TextField
+            {...this.props.inputProps}
             onChangeText={(password) => this.setState({password})}
-            placeholder='Password'
+            label='PASSWORD'
             ref='signPassword'
             returnKeyType='go'
             secureTextEntry={true}
-            style={styles.inputText}
-            value={this.state.password}
           />
 
           <TouchableOpacity style={styles.buttonWrapper} onPress={this.userSignUp.bind(this)}>
@@ -85,7 +78,7 @@ class SignUp extends Component {
           <Button
             title="Back to Sign in"
             color={AppColors.brand.secondary}
-            onPress={() => Actions.pop()}
+            onPress={() => Actions.login()}
           />
         </View>
       </View>

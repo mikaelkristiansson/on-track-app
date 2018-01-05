@@ -214,12 +214,13 @@ export default {
 
   // Navbar
   navbar: {
-    backgroundColor: Colors.brand.primary,
+    backgroundColor: '#fff',//Colors.brand.primary,
     borderBottomWidth: 0,
+    height: 30
   },
   navbarTitle: {
-    color: '#ffffff',
-    fontWeight: 'bold',
+    color: Colors.textPrimary,//'#ffffff',
+    fontWeight: '400',
     // fontFamily: Fonts.base.family,
     // fontSize: Fonts.base.size,
   },

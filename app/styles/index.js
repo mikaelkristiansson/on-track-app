@@ -30,7 +30,7 @@ export default styles = StyleSheet.create({
     width: '100%',
     textAlign: 'center',
     fontWeight: '700',
-    backgroundColor: colors.red,
+    backgroundColor: colors.purple,
     color: '#fff',
     borderRadius: 20,
     overflow: 'hidden'
@@ -42,8 +42,8 @@ export default styles = StyleSheet.create({
     width: 300,
     borderRadius: 100,
     alignItems: 'center',
-    borderWidth: 2,
-    borderColor: colors.red
+    //borderWidth: 2,
+    //borderColor: colors.red
   },
   smallButtonText: {
     fontFamily: 'Avenir',
@@ -124,7 +124,8 @@ export default styles = StyleSheet.create({
     fontSize: 40,
     margin: 10,
     textAlign: 'center',
-    color: colors.purple
+    color: colors.purple,
+    marginBottom: 30
   },
   h3: {
     fontSize: 40,
@@ -176,8 +177,8 @@ export default styles = StyleSheet.create({
     padding: 10,
     marginTop: 20,
     paddingTop: 0,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: AppColors.border
+    //borderBottomWidth: StyleSheet.hairlineWidth,
+    //borderColor: AppColors.border
     //flexDirection: 'row'
   },
   profileName: {
@@ -188,10 +189,11 @@ export default styles = StyleSheet.create({
     alignItems: 'center' 
   },
   roundedProfileImage: {
-    width:120,
-    height:120,
-    borderWidth:3,
-    borderColor: '#fff',
-    borderRadius:60,
+    width:100,
+    height:100,
+    //borderWidth:3,
+    //borderColor: '#fff',
+    borderRadius:50,
+    overflow: 'hidden'
   }
 });

@@ -19,7 +19,7 @@ const text = {
 };
   
 const borders = {
-  border: '#BABDC2'//'#D0D1D5',
+  border: '#D0D1D5',
 };
   
 const tabbar = {
@@ -27,7 +27,7 @@ const tabbar = {
     background: '#ffffff',
     border: '#eee',
     iconDefault: '#BABDC2', //'#333'
-    iconSelected: '#444',
+    iconSelected: 'rgba(59, 65, 86, .8)',
     iconMiddleBg: brand.brand.primary,
     iconMiddleColor: '#fff'
   },
@@ -35,6 +35,10 @@ const tabbar = {
 
 const indicator = {
   spinner: '#ffffff'
+};
+
+const textInput = {
+  input: '#444'
 };
   
 export default {
@@ -44,5 +48,6 @@ export default {
   ...borders,
   ...tabbar,
   ...indicator,
+  ...textInput,
 };
   

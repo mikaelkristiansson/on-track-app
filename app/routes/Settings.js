@@ -95,27 +95,24 @@ class Settings extends Component {
             {this._renderIcon()}
           </TouchableOpacity>
           <TextField
+            {...this.props.inputProps}
             label='FIRST NAME'
-            baseColor={AppColors.textSecondary}
-            tintColor={AppColors.brand.secondary}
             editable={this.state.editable}
             value={this.state.firstName}
             onChangeText={(firstName) => this.setState({firstName})}
             ref={'firstName'}
           />
           <TextField
+            {...this.props.inputProps}
             label='LAST NAME'
-            baseColor={AppColors.textSecondary}
-            tintColor={AppColors.brand.secondary}
             editable={this.state.editable}
             value={this.state.lastName}
             onChangeText={(lastName) => this.setState({lastName})}
             ref={'lastName'}
           />
           <TextField
+            {...this.props.inputProps}
             label='EMAIL'
-            baseColor={AppColors.textSecondary}
-            tintColor={AppColors.brand.secondary}
             editable={this.state.editable}
             onChangeText={(email) => this.setState({email})}
             value={this.state.email}

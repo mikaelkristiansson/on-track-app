@@ -26,6 +26,14 @@ class App extends Component {
   constructor(prop) {
     super(prop);
     this.registerExercise = this.registerExercise.bind(this);
+    this.state = {
+      inputProps: {
+        fontSize: 14,
+        textColor: AppColors.input,
+        baseColor: AppColors.textSecondary,
+        tintColor: AppColors.brand.secondary
+      }
+    };
   }
 
   registerExercise() {
@@ -98,7 +106,7 @@ class App extends Component {
                   hideNavBar={true}
                   key="Settings"
                   component={Settings}
-                  title="Settings"
+                  title="SETTINGS"
                 />
               </Scene>
             </Scene>
