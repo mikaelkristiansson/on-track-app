@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import { VictoryChart, VictoryArea, VictoryAxis, VictoryScatter } from 'victory-native';
-import { colors } from '../helpers/colors';
+import { AppColors } from '../theme';
 import moment from 'moment';
 
 class ChartContainer extends Component {
@@ -72,7 +72,7 @@ class ChartContainer extends Component {
             <VictoryArea
               style={{
                 data: {
-                  fill: colors.red, fillOpacity: 0.9, stroke: colors.red, strokeOpacity: 0.9, strokeWidth: 1
+                  fill: AppColors.brand.primary, fillOpacity: 0.9, stroke: AppColors.brand.primary, strokeOpacity: 0.9, strokeWidth: 1
                 },
                 //labels: {fill: "transparent"}
               }}

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Text, TouchableOpacity, View, ScrollView} from 'react-native';
-import styles from '../styles';
 import {Actions} from 'react-native-router-flux';
 import { Gravatar } from 'react-native-gravatar';
 import { TextField } from 'react-native-material-textfield';
@@ -8,7 +7,7 @@ import { TextField } from 'react-native-material-textfield';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 
-import { AppColors } from '../theme';
+import { AppColors, AppStyles } from '../theme';
 
 import userStore from '../stores/userStore';
 
@@ -51,9 +50,9 @@ class Settings extends Component {
   _renderSave() {
     if (this.state.editable) {
       return (
-        <View style={[styles.rightContent, {marginBottom: 20}]}>
-          <TouchableOpacity style={styles.smallButtonWrapper} onPress={() => this.updateProfile(this.state.email, this.state.firstName, this.state.lastName)}>
-            <Text style={styles.smallButtonText}> SAVE </Text>
+        <View style={[AppStyles.rightContent, {marginBottom: 20}]}>
+          <TouchableOpacity style={AppStyles.smallButtonWrapper} onPress={() => this.updateProfile(this.state.email, this.state.firstName, this.state.lastName)}>
+            <Text style={AppStyles.smallButtonText}> SAVE </Text>
           </TouchableOpacity>
         </View>
       );
@@ -76,18 +75,18 @@ class Settings extends Component {
 
   render() {
     return (
-      <View style={styles.settings}>
-        <View style={styles.centerContent}>
+      <View style={AppStyles.settings}>
+        <View style={AppStyles.centerContent}>
           <Gravatar
             options={{
               email: userStore.email,
               parameters: { "size": "200", "d": "mm" },
               secure: true
             }}
-            style={styles.roundedProfileImage} 
+            style={AppStyles.roundedProfileImage} 
           />
         </View>
-        <ScrollView style={styles.profile}>
+        <ScrollView style={AppStyles.profile}>
           <TouchableOpacity
             style={{alignSelf: 'flex-end'}}
             onPress={() => this.toggleEdit()}
@@ -125,9 +124,9 @@ class Settings extends Component {
           /> */}
           {this._renderSave()}
         </ScrollView>
-        <View style={[styles.centerContent, {marginBottom: 20}]}>
-          <TouchableOpacity style={styles.buttonWrapper} onPress={this.userLogOut}>
-            <Text style={styles.buttonText}> SIGN OUT </Text>
+        <View style={[AppStyles.centerContent, {marginBottom: 20}]}>
+          <TouchableOpacity style={AppStyles.buttonWrapper} onPress={this.userLogOut}>
+            <Text style={AppStyles.buttonText}> SIGN OUT </Text>
           </TouchableOpacity>
         </View>
       </View>

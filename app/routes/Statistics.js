@@ -4,7 +4,6 @@ import {
   RefreshControl, Dimensions, Picker
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import styles from '../styles';
 import moment from 'moment';
 import { VictoryChart, VictoryArea, VictoryZoomContainer, VictoryBrushContainer, VictoryAxis, VictoryTheme, VictoryScatter, VictoryTooltip } from 'victory-native';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
@@ -16,7 +15,7 @@ import ChartContainer from '../components/chart';
 import { AppConstants } from '../helpers';
 
 // THEME
-import { AppColors } from '../theme';
+import { AppColors, AppStyles } from '../theme';
 
 // API
 import exerciseStore from '../stores/exerciseStore';
@@ -60,10 +59,10 @@ class Statistics extends Component {
     <TabBar
       {...props}
       scrollEnabled
-      indicatorStyle={styles.indicator}
-      style={styles.tabbar}
-      tabStyle={styles.tab}
-      labelStyle={styles.label}
+      indicatorStyle={AppStyles.indicator}
+      style={AppStyles.tabbar}
+      tabStyle={AppStyles.tab}
+      labelStyle={AppStyles.label}
     />
   );
 
@@ -187,7 +186,7 @@ class Statistics extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={AppStyles.container}>
         <ScrollView
           refreshControl={
             <RefreshControl
@@ -198,30 +197,30 @@ class Statistics extends Component {
             />
           }
         >
-          <Text style={styles.h4}>{'Your Exercise Log '.toUpperCase() + this.currentYear}</Text>
+          <Text style={AppStyles.h4}>{'Your Exercise Log '.toUpperCase() + this.currentYear}</Text>
           <View style={{flex: 1, flexDirection: 'row'}}>
             <View style={{width: '33.3%', paddingLeft: 25}}>
-              <Text style={styles.statsTitle}>Last Month</Text>
-              <Text style={styles.purpleText}><Text style={styles.statsNumber}>{this.state.averageLastMonth}</Text><Text>/week</Text></Text>
+              <Text style={AppStyles.statsTitle}>Last Month</Text>
+              <Text style={AppStyles.purpleText}><Text style={AppStyles.statsNumber}>{this.state.averageLastMonth}</Text><Text>/week</Text></Text>
             </View>
             <View style={{width: '33.3%', paddingLeft: 25}}>
-              <Text style={styles.statsTitle}>Last 6 Months</Text>
-              <Text style={styles.purpleText}><Text style={styles.statsNumber}>{this.state.averageHalfYear}</Text><Text>/week</Text></Text>
+              <Text style={AppStyles.statsTitle}>Last 6 Months</Text>
+              <Text style={AppStyles.purpleText}><Text style={AppStyles.statsNumber}>{this.state.averageHalfYear}</Text><Text>/week</Text></Text>
             </View>
             <View style={{width: '33.3%', paddingLeft: 25}}>
-              <Text style={styles.statsTitle}>This Year</Text>
-              <Text style={styles.purpleText}><Text style={styles.statsNumber}>{this.state.averageWeek}</Text><Text>/week</Text></Text>
+              <Text style={AppStyles.statsTitle}>This Year</Text>
+              <Text style={AppStyles.purpleText}><Text style={AppStyles.statsNumber}>{this.state.averageWeek}</Text><Text>/week</Text></Text>
             </View>
           </View>
         </ScrollView>
         <TouchableOpacity
           onPress={() => this.setState({ modalVisible: true })}
         >
-          <Text style={styles.h3}>{this.state.selectedYear}</Text>
+          <Text style={AppStyles.h3}>{this.state.selectedYear}</Text>
         </TouchableOpacity>
-        <Text style={styles.sub}>Average current month: {this.state.averageMonth}</Text>
+        <Text style={AppStyles.sub}>Average current month: {this.state.averageMonth}</Text>
         <TabViewAnimated
-          style={[styles.tabcontainer, {opacity: this.state.exercisesLoaded ? 1 : 0}]}
+          style={[AppStyles.tabcontainer, {opacity: this.state.exercisesLoaded ? 1 : 0}]}
           navigationState={this.state}
           renderScene={this._renderScene}
           renderHeader={this._renderHeader}
@@ -240,8 +239,8 @@ class Statistics extends Component {
           visible={this.state.modalVisible}>
           <TouchableWithoutFeedback
             onPress={() => this.setState({ modalVisible: false })}>
-            <View style={styles.pickerModalContainer}>
-              <View style={styles.pickerButtonContainer}>
+            <View style={AppStyles.pickerModalContainer}>
+              <View style={AppStyles.pickerButtonContainer}>
                 <Text
                   style={{ color: AppColors.brand.primary }}
                   onPress={() => this.setState({ modalVisible: false })}>
@@ -250,7 +249,7 @@ class Statistics extends Component {
               </View>
               <View>
                 <Picker
-                  style={styles.modalPicker}
+                  style={AppStyles.modalPicker}
                   selectedValue={this.state.selectedYear}
                   onValueChange={(itemValue, itemIndex) => this.updateYear(itemValue)}>
                   {this.state.availableYears.map((i, index) => (

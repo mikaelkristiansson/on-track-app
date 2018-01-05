@@ -17,7 +17,6 @@ import Register from './routes/Register';
 
 
 // HELPERS & THEME
-import { colors } from './helpers/colors';
 import { AppConfig } from './helpers';
 import { AppColors } from './theme';
 

@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import {Image, Text, TextInput, TouchableOpacity, View, Button} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import { TextField } from 'react-native-material-textfield';
-import styles from '../styles';
-import { AppColors } from '../theme';
+import { AppColors, AppStyles } from '../theme';
 
 import logo from '../images/logo.png';
 
@@ -26,11 +25,11 @@ class SignUp extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Image source={logo} style={styles.logo}/>
-        <Text style={styles.title}> ON TRACK </Text>
+      <View style={AppStyles.container}>
+        <Image source={logo} style={AppStyles.logo}/>
+        <Text style={AppStyles.title}> ON TRACK </Text>
 
-        <View style={styles.form}>
+        <View style={AppStyles.form}>
           <TextField
             {...this.props.inputProps}
             onChangeText={(email) => this.setState({email})}
@@ -72,8 +71,8 @@ class SignUp extends Component {
             secureTextEntry={true}
           />
 
-          <TouchableOpacity style={styles.buttonWrapper} onPress={this.userSignUp.bind(this)}>
-            <Text style={styles.buttonText}> SIGN UP </Text>
+          <TouchableOpacity style={AppStyles.buttonWrapper} onPress={this.userSignUp.bind(this)}>
+            <Text style={AppStyles.buttonText}> SIGN UP </Text>
           </TouchableOpacity>
           <Button
             title="Back to Sign in"
