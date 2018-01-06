@@ -6,7 +6,7 @@ export default {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFF',
+    backgroundColor: Colors.background,
     paddingTop: 30
   },
   text: {
@@ -88,8 +88,8 @@ export default {
   tabbar: {
     backgroundColor: 'transparent',
     height: 40,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee'
+    borderBottomWidth: .5,
+    borderBottomColor: Colors.tabbar.border
   },
   tab: {
     width: 120,
@@ -147,21 +147,24 @@ export default {
     textAlign: 'center',
     paddingBottom: 0,
     paddingTop: 10,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: Colors.textPrimary
   },
   h4: {
     fontSize: 20,
     textAlign: 'center',
     paddingBottom: 10,
-    paddingTop: 10
+    paddingTop: 10,
+    color: Colors.textPrimary
   },
   sub: {
     fontStyle: 'italic',
-    color: '#999',
+    color: Colors.textSecondary,
     paddingBottom: 20
   },
   statsTitle: {
-    fontWeight: '500'
+    fontWeight: '500',
+    color: Colors.textPrimary
   },
   purpleText: {
     color: Colors.brand.secondary
@@ -185,7 +188,7 @@ export default {
   },
   settings: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: Colors.background,
     paddingTop: 60
   },
   profile: {

@@ -72,9 +72,13 @@ class ChartContainer extends Component {
             <VictoryArea
               style={{
                 data: {
-                  fill: AppColors.brand.primary, fillOpacity: 0.9, stroke: AppColors.brand.primary, strokeOpacity: 0.9, strokeWidth: 1
+                  fill: AppColors.chart.fill, 
+                  fillOpacity: 0.4, 
+                  stroke: AppColors.chart.line, 
+                  strokeOpacity: 0.9, 
+                  strokeWidth: 3,
                 },
-                //labels: {fill: "transparent"}
+                labels: {fill: AppColors.textPrimary, padding: 15, fontSize: 16, fontFamily: 'Avenir'}
               }}
               interpolation={'monotoneX'}
               categories={{
@@ -89,33 +93,6 @@ class ChartContainer extends Component {
               domain={{y: [0, 10]}}
               labels={(datum) => String(Math.round(datum.y))}
               data={this.setData()}
-              // events={[{
-              //     target: "data",
-              //     eventHandlers: {
-              //         onTouchStart: () => {
-              //         return [
-              //           {
-              //             target: "data",
-              //             mutation: () => {}
-              //           }, {
-              //             target: "labels",
-              //             mutation: () => ({ active: true, style: {fill: "red"} })
-              //           }
-              //         ];
-              //       },
-              //       onTouchEnd: () => {
-              //         return [
-              //           {
-              //             target: "data",
-              //             mutation: () => {}
-              //           }, {
-              //             target: "labels",
-              //             mutation: () => ({ active: false })
-              //           }
-              //         ];
-              //       }
-              //     }
-              //   }]}
             />
             <VictoryAxis
               orientation="top"
@@ -134,14 +111,15 @@ class ChartContainer extends Component {
                                   this.props.selectedTab === this.currentMonth && 
                                   tick === this.weekOfMonth) ? 
                                   AppColors.brand.primary : AppColors.textThirdly,
-                  fontSize: 14
+                  fontSize: 14,
+                  fontFamily: 'Avenir'
                 }
               }}
             />
             <VictoryScatter
               style={{
                 data: {
-                  fill: AppColors.brand.primary, fillOpacity: 1, stroke: '#fff', strokeOpacity: .9, strokeWidth: 7
+                  fill: AppColors.chart.scatter, fillOpacity: 1, stroke: AppColors.chart.scatterBorder, strokeOpacity: .9, strokeWidth: 3
                 }
               }}
               animate={{
@@ -150,7 +128,7 @@ class ChartContainer extends Component {
                   duration: 300, 
                 }
               }}
-              size={9}
+              size={6}
               data={this.setData()}
             />
     

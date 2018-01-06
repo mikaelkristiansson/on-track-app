@@ -1,5 +1,5 @@
 const app = {
-  background: '#E9EBEE',
+  background: '#fff',//'#49477A',
   cardBackground: '#FFFFFF',
   listItemBackground: '#FFFFFF',
 };
@@ -7,6 +7,7 @@ const app = {
 const brand = {
   brand: {
     primary: '#fa3d4b',//'#0E4EF8',
+    primaryOpacity: 'rgba(250, 61, 75, .4)',
     secondary: '#673ab7'//'#17233D',
   },
 };
@@ -28,7 +29,7 @@ const tabbar = {
     background: '#ffffff',
     border: '#eee',
     iconDefault: '#BABDC2', //'#333'
-    iconSelected: 'rgba(59, 65, 86, .8)',
+    iconSelected: text.primary,
     iconMiddleBg: brand.brand.primary,
     iconMiddleColor: '#fff'
   },
@@ -41,6 +42,15 @@ const indicator = {
 const textInput = {
   input: '#444'
 };
+
+const victory = {
+  chart: {
+    line: brand.brand.primary,//'#20E5FF',
+    fill: brand.brand.primaryOpacity,//'rgba(11,205,253, .4)',
+    scatter: app.background,
+    scatterBorder: brand.brand.primary//'#20E5FF'
+  }
+};
   
 export default {
   ...app,
@@ -50,5 +60,6 @@ export default {
   ...tabbar,
   ...indicator,
   ...textInput,
+  ...victory,
 };
   
