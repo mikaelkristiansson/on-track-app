@@ -10,7 +10,7 @@ class ChartContainer extends Component {
     super(prop);
     //let dated = new Date();
     const now = moment();
-    this.weekOfMonth = this.weekOfMonth(now);//(0 | dated.getDate() / 7)+1;
+    this.weekOfMonth = this.setWeekOfMonth(now);//(0 | dated.getDate() / 7)+1;
     if (this.weekOfMonth === 5) this.weekOfMonth = 4;
     this.currentMonth = now.month();//dated.getMonth();
     this.currentYear = now.year();//dated.getFullYear();
@@ -27,7 +27,7 @@ class ChartContainer extends Component {
     });
   }
 
-  weekOfMonth(m) {
+  setWeekOfMonth(m) {
     return m.isoWeek() - moment(m).startOf('month').isoWeek() + 1;
   }
 
@@ -42,7 +42,7 @@ class ChartContainer extends Component {
     this.props.exercises.map(exercise => {
       const d = moment(exercise.created_at);
       let month = d.month();
-      let week = d.isoWeek() - moment(d).startOf('month').isoWeek() + 1;//(0 | d.date() / 7)+1;
+      let week = this.setWeekOfMonth(d);//(0 | d.date() / 7)+1;
       if (week === 5) week = 4;
       months[month].weeks[week-1].y = months[month].weeks[week-1].y !== 0 ? months[month].weeks[week-1].y+1 : 1;
     });
