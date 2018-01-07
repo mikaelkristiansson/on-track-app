@@ -36,7 +36,8 @@ const tabbar = {
 };
 
 const indicator = {
-  spinner: '#ffffff'
+  spinner: brand.brand.primaryOpacity,
+  launch: '#fff'
 };
 
 const textInput = {

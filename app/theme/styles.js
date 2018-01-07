@@ -11,6 +11,7 @@ export default {
   },
   text: {
     fontFamily: 'Avenir',
+    color: Colors.textPrimary
   },
   bold: {
     fontWeight: 'bold'

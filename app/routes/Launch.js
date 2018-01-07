@@ -5,7 +5,7 @@ import {
   View,
   Text
 } from 'react-native';
-import { AppColors } from '../theme';
+import { AppColors, AppStyles } from '../theme';
 
 /* Component ==================================================================== */
 export default class Launch extends Component {
@@ -22,9 +22,9 @@ export default class Launch extends Component {
       height: '100%',
       width: '100%',
       position: 'absolute', 
-      backgroundColor: AppColors.brand.primary
+      backgroundColor: AppColors.launch
     }}>
-      <Text style={{color: '#fff', fontSize: 26, paddingBottom: 140}}>LOADING EXERCISES</Text>
+      <Text style={[AppStyles.text, {fontSize: 26, paddingBottom: 140}]}>LOADING EXERCISES</Text>
       <ActivityIndicator
         style={{
           flex: 1,

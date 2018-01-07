@@ -1,23 +1,23 @@
 import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import { VictoryChart, VictoryArea, VictoryAxis, VictoryScatter } from 'victory-native';
-import { AppColors } from '../theme';
+import { AppColors, AppStyles } from '../theme';
 import moment from 'moment';
 
 class ChartContainer extends Component {
 
   constructor(prop) {
     super(prop);
-    let dated = new Date();
-    this.weekOfMonth = (0 | dated.getDate() / 7)+1;
+    //let dated = new Date();
+    const now = moment();
+    this.weekOfMonth = this.weekOfMonth(now);//(0 | dated.getDate() / 7)+1;
     if (this.weekOfMonth === 5) this.weekOfMonth = 4;
-    this.currentMonth = dated.getMonth();
-    this.currentYear = dated.getFullYear();
+    this.currentMonth = now.month();//dated.getMonth();
+    this.currentYear = now.year();//dated.getFullYear();
     this.state = {
       data: [],
       loaded: false
     };
-
   }
 
   componentWillMount() {
@@ -25,6 +25,10 @@ class ChartContainer extends Component {
       data: [],
       loaded: false
     });
+  }
+
+  weekOfMonth(m) {
+    return m.isoWeek() - moment(m).startOf('month').isoWeek() + 1;
   }
 
   componentDidMount() {
@@ -38,7 +42,7 @@ class ChartContainer extends Component {
     this.props.exercises.map(exercise => {
       const d = moment(exercise.created_at);
       let month = d.month();
-      let week = (0 | d.date() / 7)+1;
+      let week = d.isoWeek() - moment(d).startOf('month').isoWeek() + 1;//(0 | d.date() / 7)+1;
       if (week === 5) week = 4;
       months[month].weeks[week-1].y = months[month].weeks[week-1].y !== 0 ? months[month].weeks[week-1].y+1 : 1;
     });
@@ -52,12 +56,6 @@ class ChartContainer extends Component {
       data: months,
       loaded: true
     });
-  }
-
-  weeksinMonth(m, y) {
-    y= y || new Date().getFullYear();
-    var d= new Date(y, m, 0);
-    return Math.floor((d.getDate()- 1)/7)+ 1;     
   }
 
   setData() {
@@ -133,7 +131,7 @@ class ChartContainer extends Component {
             />
     
           </VictoryChart>
-          : <View style={{flex: .4}}><Text>LOADING DATA...</Text></View> }
+          : <View style={{flex: .4}}><Text style={AppStyles.text}>LOADING DATA...</Text></View> }
       </View>
     );
   }

@@ -192,7 +192,7 @@ class Statistics extends Component {
             <RefreshControl
               refreshing={this.state.refreshing}
               onRefresh={this._onRefresh.bind(this)}
-              tintColor={AppColors.brand.secondary}
+              tintColor={AppColors.spinner}
               title="Loading exercises..."
             />
           }
@@ -231,7 +231,7 @@ class Statistics extends Component {
           this.state.exercisesLoaded ? 
             <ChartContainer selectedYear={this.state.selectedYear} selectedTab={this.state.index} exercises={this.state.exercises} tabs={this.state.routes} /> 
             : 
-            <View style={{flex: 1.7}}><Text>LOADING DATA...</Text></View> 
+            <View style={{flex: 1.7}}><Text style={AppStyles.text}>LOADING DATA...</Text></View> 
         }
         <Modal
           animationType="slide"
