@@ -25,19 +25,33 @@ class App extends Component {
   constructor(prop) {
     super(prop);
     this.registerExercise = this.registerExercise.bind(this);
+    this.loadExercises = this.loadExercises.bind(this);
     this.state = {
       inputProps: {
         fontSize: 14,
         textColor: AppColors.input,
         baseColor: AppColors.textSecondary,
         tintColor: AppColors.brand.secondary
-      }
+      },
+      exercises: [],
+      exercisesLoaded: false,
     };
   }
 
   registerExercise() {
     exerciseStore.save().then((exercise) => {
       Actions.app();
+    });
+  }
+
+  loadExercises() {
+    exerciseStore.get(this.currentYear).then((exercises) => {
+      console.log('exercises: ',exercises);
+      //exercises = this.formatDate(exercises);
+      this.setState({
+        exercises: exercises,
+        exercisesLoaded: true
+      });
     });
   }
 
@@ -88,6 +102,7 @@ class App extends Component {
                   key="Statistics"
                   component={Statistics}
                   title="Statistics"
+                  loadExercises={this.loadExercises}
                 />
               </Scene>
               <Scene key="Register" title="Register" icon={TabIcon}>

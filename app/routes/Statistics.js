@@ -25,6 +25,8 @@ const initialLayout = {
   width: Dimensions.get('window').width,
 };
 
+let loadedOnce = 0;
+
 class Statistics extends Component {
 
   constructor(prop) {
@@ -67,6 +69,13 @@ class Statistics extends Component {
   );
 
   _renderScene = ({ route }) => {};
+
+  componentWillMount() {
+    if(loadedOnce) {
+      this.props.loadExercises();
+    }
+    loadedOnce++;
+  }
 
   componentDidMount() {
     this.getExercises();
