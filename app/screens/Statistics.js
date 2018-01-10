@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {
-  ScrollView, Text, TouchableOpacity, View, Modal, TouchableWithoutFeedback, AsyncStorage,
+  ScrollView, Text, TouchableOpacity, View, Modal, TouchableWithoutFeedback,
   RefreshControl, Dimensions, Picker
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
 import moment from 'moment';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -33,10 +32,9 @@ class Statistics extends Component {
     super(props);
     const now = moment();
     this.currentYear = now.year();
+    this.currentMonth = now.month();
+    this.weekOfMonth = this.setWeekOfMonth(now);
 
-    this.date = new Date();
-    this.weekOfMonth = (0 | this.date.getDate() / 7)+1;
-    //this.currentYear = this.date.getFullYear();
     this.state = {
       averageWeek: 0,
       averageMonth: 0,
@@ -47,8 +45,10 @@ class Statistics extends Component {
       index: 0,
       routes: AppConstants.months,
       selectedYear: this.props.screenProps.selectedYear || now.year(),
-      availableYears: [{'label': '2017', value: 2017},
-        {'label': '2018', value: 2018}]
+      availableYears: [
+        {'label': '2017', value: 2017},
+        {'label': '2018', value: 2018}
+      ] // TODO: make this dynamic
     };
   }
 
@@ -60,11 +60,11 @@ class Statistics extends Component {
     showLabel: false,
   };
 
-    _handleIndexChange = index => {
-      this.setState({
-        index: index
-      });
-    };
+  _handleIndexChange = index => {
+    this.setState({
+      index: index
+    });
+  };
 
   _renderHeader = props => (
     <TabBar
@@ -89,7 +89,7 @@ class Statistics extends Component {
   componentDidMount() {
     setTimeout(()=> {
       this.setState({
-        index: this.date.getMonth()
+        index: this.currentMonth
       });
     }, 1);
     this.setAverage(this.props.screenProps.exercises);
@@ -97,16 +97,6 @@ class Statistics extends Component {
 
   updateYear(year) {
     this.props.screenProps.loadExercises(year);
-  }
-
-  formatDate(objects) {
-    if(objects) {
-      objects.map((object) => {
-        object.date = moment(object.created_at).format('YYYY-MM-DD HH:mm:ss');
-        object.count = 1;
-      });
-    }
-    return objects;
   }
 
   static calculateAverage(elements, duration) {
@@ -125,6 +115,10 @@ class Statistics extends Component {
 
   static average(elements) {
     return elements.reduce((count, elem) => count + elem.count, 0) / elements.length;
+  }
+
+  setWeekOfMonth(m) {
+    return m.isoWeek() - moment(m).startOf('month').isoWeek() + 1;
   }
 
   setAverage(exercises) {
@@ -172,7 +166,7 @@ class Statistics extends Component {
       this.setState({
         refreshing: false, 
         selectedYear: this.currentYear,
-        index: this.date.getMonth()
+        index: this.currentMonth
       });
     });
   }
