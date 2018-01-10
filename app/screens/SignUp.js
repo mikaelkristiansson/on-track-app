@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Image, Text, TextInput, TouchableOpacity, View, Button} from 'react-native';
-import {Actions} from 'react-native-router-flux';
 import { TextField } from 'react-native-material-textfield';
 import { AppColors, AppStyles } from '../theme';
 
@@ -15,12 +14,7 @@ class SignUp extends Component {
 
   userSignUp() {
     if (!this.state.email || !this.state.password || !this.state.firstName || !this.state.lastName) return;
-    // Actions.doSignUp({
-    //   email: this.state.email,
-    //   password: this.state.password,
-    //   firstName: this.state.firstName,
-    //   lastName: this.state.lastName,
-    // });  
+    this.props.screenProps.signUp(this.state.email, this.state.password, this.state.firstName, this.state.lastName);
   }
 
   backToSignIn() {
