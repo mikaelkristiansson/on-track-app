@@ -10,7 +10,6 @@ import Settings from './screens/Settings';
 import Register from './screens/Register';
 
 // HELPERS & THEME
-//import { AppConfig } from './helpers';
 import { AppColors } from './theme';
 
 const headerStyle = {

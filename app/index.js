@@ -11,7 +11,6 @@ import userStore from './stores/userStore';
 import exerciseStore from './stores/exerciseStore';
 
 // HELPERS & THEME
-import { AppConfig } from './helpers';
 import { AppColors } from './theme';
 
 class App extends Component {

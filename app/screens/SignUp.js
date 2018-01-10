@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Image, Text, TextInput, TouchableOpacity, View, Button} from 'react-native';
+import {Image, Text, TouchableOpacity, View, Button} from 'react-native';
 import { TextField } from 'react-native-material-textfield';
 import { AppColors, AppStyles } from '../theme';
 

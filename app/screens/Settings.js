@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Text, TouchableOpacity, View, ScrollView} from 'react-native';
-import {Actions} from 'react-native-router-flux';
 import { Gravatar } from 'react-native-gravatar';
 import { TextField } from 'react-native-material-textfield';
 
