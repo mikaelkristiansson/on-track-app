@@ -17,15 +17,15 @@ class RegisterButton extends Component {
 
     render() {
         return (
-            <View style={{zIndex: 99999999999999, position: 'absolute', bottom: 45}}>
+            // <View style={{zIndex: 99999999999999, position: 'absolute', bottom: 45}}>
             <ActionButton
                 buttonColor={red} 
                 position="center"
-                offsetY={-25}
+                offsetY={5}
                 hideShadow={true}
                 onPress={this.registerExerciseFromChild}
             />
-            </View>
+            // </View>
         );
     }
 }

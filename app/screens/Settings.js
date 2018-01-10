@@ -13,8 +13,8 @@ import userStore from '../stores/userStore';
 
 class Settings extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       editable: false,
       email: userStore.email, 
@@ -22,6 +22,14 @@ class Settings extends Component {
       lastName: userStore.lastName
     };
   }
+
+  static navigationOptions = {
+    tabBarLabel: 'Statistics',
+    tabBarIcon: ({ focused, tintColor }) => (
+      <Ionicon name={focused ? 'ios-settings' : 'ios-settings-outline'} size={36} color={focused ? AppColors.tabbar.iconSelected : AppColors.tabbar.iconDefault} />
+    ),
+    showLabel: false,
+  };
 
   toggleEdit() {
     this.setState({
@@ -43,7 +51,7 @@ class Settings extends Component {
   }
 
   userLogOut() {
-    Actions.logout();
+    this.props.screenProps.signOut();
   }
 
   _renderSave() {
@@ -124,7 +132,7 @@ class Settings extends Component {
           {this._renderSave()}
         </ScrollView>
         <View style={[AppStyles.centerContent, {marginBottom: 20}]}>
-          <TouchableOpacity style={AppStyles.buttonWrapper} onPress={this.userLogOut}>
+          <TouchableOpacity style={AppStyles.buttonWrapper} onPress={this.userLogOut.bind(this)}>
             <Text style={AppStyles.buttonText}> SIGN OUT </Text>
           </TouchableOpacity>
         </View>

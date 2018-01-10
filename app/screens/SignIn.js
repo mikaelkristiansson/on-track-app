@@ -7,7 +7,7 @@ import { AppColors, AppStyles } from '../theme';
 
 import logo from '../images/logo.png';
 
-class Login extends Component {
+class SignIn extends Component {
 
   constructor(props) {
     super(props);
@@ -16,7 +16,11 @@ class Login extends Component {
 
   userLogin() {
     if (!this.state.email || !this.state.password) return;
-    this.props.onLogin({ email: this.state.email, password: this.state.password });
+    this.props.screenProps.signIn(this.state.email, this.state.password);
+  }
+
+  backToSignUp() {
+    this.props.navigation.navigate('SignUp');
   }
 
   render() {
@@ -27,7 +31,7 @@ class Login extends Component {
 
         <View style={AppStyles.form}>
           <TextField
-            {...this.props.inputProps}
+            {...this.props.screenProps.inputProps}
             onChangeText={(email) => this.setState({email})}
             label='EMAIL'
             ref='email'
@@ -38,7 +42,7 @@ class Login extends Component {
             onSubmitEditing={() => this.refs.password.focus()}
           />
           <TextField
-            {...this.props.inputProps}
+            {...this.props.screenProps.inputProps}
             onChangeText={(password) => this.setState({password})}
             label='PASSWORD'
             ref='password'
@@ -50,11 +54,11 @@ class Login extends Component {
           <TouchableOpacity style={AppStyles.buttonWrapper} onPress={this.userLogin.bind(this)}>
             <Text style={AppStyles.buttonText}> SIGN IN </Text>
           </TouchableOpacity>
-          <Button color={AppColors.brand.secondary} outlined title={'Sign Up'} onPress={this.props.onSignUp} />
+          <Button color={AppColors.brand.secondary} outlined title={'Sign Up'} onPress={this.backToSignUp.bind(this)} />
         </View>
       </View>
     );
   }
 }
 
-export default Login;
+export default SignIn;

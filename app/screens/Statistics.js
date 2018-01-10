@@ -5,8 +5,8 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import moment from 'moment';
-import { VictoryChart, VictoryArea, VictoryZoomContainer, VictoryBrushContainer, VictoryAxis, VictoryTheme, VictoryScatter, VictoryTooltip } from 'victory-native';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 // COMPONENTS
 import ChartContainer from '../components/chart';
@@ -25,18 +25,19 @@ const initialLayout = {
   width: Dimensions.get('window').width,
 };
 
-let loadedOnce = 0;
+let loadOnce = 0;
 
 class Statistics extends Component {
 
-  constructor(prop) {
-    super(prop);
+  constructor(props) {
+    super(props);
+    const now = moment();
+    this.currentYear = now.year();
+
     this.date = new Date();
     this.weekOfMonth = (0 | this.date.getDate() / 7)+1;
-    this.currentYear = this.date.getFullYear();
+    //this.currentYear = this.date.getFullYear();
     this.state = {
-      exercises: [],
-      exercisesLoaded: false,
       averageWeek: 0,
       averageMonth: 0,
       averageHalfYear: 0,
@@ -45,11 +46,19 @@ class Statistics extends Component {
       refreshing: false,
       index: 0,
       routes: AppConstants.months,
-      selectedYear: this.date.getFullYear(),
+      selectedYear: this.props.screenProps.selectedYear || now.year(),
       availableYears: [{'label': '2017', value: 2017},
         {'label': '2018', value: 2018}]
     };
   }
+
+  static navigationOptions = {
+    tabBarLabel: 'Statistics',
+    tabBarIcon: ({ focused, tintColor }) => (
+      <Icon name={focused ? 'ios-analytics' : 'ios-analytics-outline'} size={36} color={focused ? AppColors.tabbar.iconSelected : AppColors.tabbar.iconDefault} />
+    ),
+    showLabel: false,
+  };
 
     _handleIndexChange = index => {
       this.setState({
@@ -71,41 +80,23 @@ class Statistics extends Component {
   _renderScene = ({ route }) => {};
 
   componentWillMount() {
-    if(loadedOnce) {
-      this.props.loadExercises();
+    if(!loadOnce) {
+      this.props.screenProps.loadExercises(this.props.screenProps.selectedYear);
     }
-    loadedOnce++;
+    loadOnce++;
   }
 
   componentDidMount() {
-    this.getExercises();
     setTimeout(()=> {
       this.setState({
         index: this.date.getMonth()
       });
     }, 1);
-  }
-
-  getExercises() { 
-    exerciseStore.get(this.currentYear).then((exercises) => {
-      console.log('exercises: ',exercises);
-      //exercises = this.formatDate(exercises);
-      this.setState({
-        exercises: exercises,
-        exercisesLoaded: true
-      });
-      this.setAverage();
-    });
+    this.setAverage(this.props.screenProps.exercises);
   }
 
   updateYear(year) {
-    this.setState({selectedYear: year, exercises: [], exercisesLoaded: false});
-    exerciseStore.get(year).then((exercises) => {
-      this.setState({
-        exercises: exercises,
-        exercisesLoaded: true
-      });
-    });
+    this.props.screenProps.loadExercises(year);
   }
 
   formatDate(objects) {
@@ -136,11 +127,11 @@ class Statistics extends Component {
     return elements.reduce((count, elem) => count + elem.count, 0) / elements.length;
   }
 
-  setAverage() {
+  setAverage(exercises) {
     let today = moment();
     let lastMonth =  moment().subtract(1, 'months');
     let sixMonthsAgo = moment().subtract(6, 'months');
-    let exercises = this.state.exercises;
+    //let exercises = this.state.exercises;
     let thisMonthExercises = [];
     let lastMonthExercises = [];
     let lastSixMonthsExercises = [];
@@ -176,20 +167,13 @@ class Statistics extends Component {
   }
 
   _onRefresh() {
-    this.setState({refreshing: true, exercises: [], exercisesLoaded: false});
-    exerciseStore.get(this.currentYear).then((exercises) => {
-      if(exercises) {
-        //exercises = this.formatDate(exercises);
-        this.setState({
-          exercises: exercises,
-          exercisesLoaded: true,
-          selectedYear: this.currentYear,
-          index: this.date.getMonth()
-        });
-        Actions.refresh({exercises: exercises});
-        this.setAverage();
-      }
-      this.setState({refreshing: false});
+    this.setState({refreshing: true});
+    this.props.screenProps.loadExercises(this.currentYear).then(() => {
+      this.setState({
+        refreshing: false, 
+        selectedYear: this.currentYear,
+        index: this.date.getMonth()
+      });
     });
   }
 
@@ -206,7 +190,7 @@ class Statistics extends Component {
             />
           }
         >
-          <Text style={AppStyles.h4}>{'Your Exercise Log '.toUpperCase() + this.currentYear}</Text>
+          <Text style={AppStyles.h4}>{'Your Exercise Log '.toUpperCase() + this.props.screenProps.selectedYear}</Text>
           <View style={{flex: 1, flexDirection: 'row'}}>
             <View style={{width: '33.3%', paddingLeft: 25}}>
               <Text style={AppStyles.statsTitle}>Last Month</Text>
@@ -225,11 +209,11 @@ class Statistics extends Component {
         <TouchableOpacity
           onPress={() => this.setState({ modalVisible: true })}
         >
-          <Text style={AppStyles.h3}>{this.state.selectedYear}</Text>
+          <Text style={AppStyles.h3}>{this.props.screenProps.selectedYear}</Text>
         </TouchableOpacity>
         <Text style={AppStyles.sub}>Average current month: {this.state.averageMonth}</Text>
         <TabViewAnimated
-          style={[AppStyles.tabcontainer, {opacity: this.state.exercisesLoaded ? 1 : 0}]}
+          style={[AppStyles.tabcontainer, {opacity: this.props.screenProps.exercisesLoaded ? 1 : 0}]}
           navigationState={this.state}
           renderScene={this._renderScene}
           renderHeader={this._renderHeader}
@@ -237,8 +221,8 @@ class Statistics extends Component {
           initialLayout={initialLayout}
         />
         {
-          this.state.exercisesLoaded ? 
-            <ChartContainer selectedYear={this.state.selectedYear} selectedTab={this.state.index} exercises={this.state.exercises} tabs={this.state.routes} /> 
+          this.props.screenProps.exercisesLoaded ? 
+            <ChartContainer selectedYear={this.props.screenProps.selectedYear} selectedTab={this.state.index} exercises={this.props.screenProps.exercises} tabs={this.state.routes} /> 
             : 
             <View style={{flex: 1.7}}><Text style={AppStyles.text}>LOADING DATA...</Text></View> 
         }
@@ -252,7 +236,10 @@ class Statistics extends Component {
               <View style={AppStyles.pickerButtonContainer}>
                 <Text
                   style={{ color: AppColors.brand.primary }}
-                  onPress={() => this.setState({ modalVisible: false })}>
+                  onPress={() => {
+                    this.updateYear(this.state.selectedYear);
+                    this.setState({ modalVisible: false });
+                  }}>
                     Done
                 </Text>
               </View>
@@ -260,7 +247,7 @@ class Statistics extends Component {
                 <Picker
                   style={AppStyles.modalPicker}
                   selectedValue={this.state.selectedYear}
-                  onValueChange={(itemValue, itemIndex) => this.updateYear(itemValue)}>
+                  onValueChange={(itemValue, itemIndex) => this.setState({selectedYear: itemValue})}>
                   {this.state.availableYears.map((i, index) => (
                     <Picker.Item
                       key={index}

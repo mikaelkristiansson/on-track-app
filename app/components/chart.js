@@ -20,18 +20,18 @@ class ChartContainer extends Component {
     };
   }
 
-  componentWillMount() {
-    this.setState({
-      data: [],
-      loaded: false
-    });
-  }
+  // componentWillMount() {
+  //   this.setState({
+  //     data: [],
+  //     loaded: false
+  //   });
+  // }
 
   setWeekOfMonth(m) {
     return m.isoWeek() - moment(m).startOf('month').isoWeek() + 1;
   }
 
-  componentDidMount() {
+  componentWillMount() {
     let months = [];
     this.props.tabs.map(tab => {
       let weeks = [];
@@ -85,7 +85,8 @@ class ChartContainer extends Component {
               animate={{
                 duration: 300,
                 onLoad: { 
-                  duration: 300, 
+                  duration: 600,
+                  easing: 'bounce',
                 }
               }}
               domain={{y: [0, 10]}}
@@ -96,7 +97,11 @@ class ChartContainer extends Component {
               orientation="top"
               animate={{
                 duration: 1000,
-                easing: 'bounce'
+                easing: 'bounce',
+                onLoad: { 
+                  duration: 1000,
+                  easing: 'bounce',
+                }
               }}
               offsetY={45}
               style={{
@@ -123,7 +128,7 @@ class ChartContainer extends Component {
               animate={{
                 duration: 300,
                 onLoad: { 
-                  duration: 300, 
+                  duration: 1000, 
                 }
               }}
               size={6}

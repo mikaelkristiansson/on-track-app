@@ -15,12 +15,16 @@ class SignUp extends Component {
 
   userSignUp() {
     if (!this.state.email || !this.state.password || !this.state.firstName || !this.state.lastName) return;
-    Actions.doSignUp({
-      email: this.state.email,
-      password: this.state.password,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-    });  
+    // Actions.doSignUp({
+    //   email: this.state.email,
+    //   password: this.state.password,
+    //   firstName: this.state.firstName,
+    //   lastName: this.state.lastName,
+    // });  
+  }
+
+  backToSignIn() {
+    this.props.navigation.navigate('SignIn');
   }
 
   render() {
@@ -31,7 +35,7 @@ class SignUp extends Component {
 
         <View style={AppStyles.form}>
           <TextField
-            {...this.props.inputProps}
+            {...this.props.screenProps.inputProps}
             onChangeText={(email) => this.setState({email})}
             label='EMAIL'
             ref='signEmail'
@@ -43,7 +47,7 @@ class SignUp extends Component {
           />
 
           <TextField
-            {...this.props.inputProps}
+            {...this.props.screenProps.inputProps}
             onChangeText={(firstName) => this.setState({firstName})}
             label='FIRST NAME'
             ref='signFirstName'
@@ -53,7 +57,7 @@ class SignUp extends Component {
           />
 
           <TextField
-            {...this.props.inputProps}
+            {...this.props.screenProps.inputProps}
             onChangeText={(lastName) => this.setState({lastName})}
             label='LAST NAME'
             ref='signLastName'
@@ -63,7 +67,7 @@ class SignUp extends Component {
           />
 
           <TextField
-            {...this.props.inputProps}
+            {...this.props.screenProps.inputProps}
             onChangeText={(password) => this.setState({password})}
             label='PASSWORD'
             ref='signPassword'
@@ -77,7 +81,7 @@ class SignUp extends Component {
           <Button
             title="Back to Sign in"
             color={AppColors.brand.secondary}
-            onPress={() => Actions.login()}
+            onPress={this.backToSignIn.bind(this)}
           />
         </View>
       </View>
