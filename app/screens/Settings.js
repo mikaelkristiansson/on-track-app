@@ -101,7 +101,7 @@ class Settings extends Component {
             {this._renderIcon()}
           </TouchableOpacity>
           <TextField
-            {...this.props.inputProps}
+            {...this.props.screenProps.inputProps}
             label='FIRST NAME'
             editable={this.state.editable}
             value={this.state.firstName}
@@ -109,7 +109,7 @@ class Settings extends Component {
             ref={'firstName'}
           />
           <TextField
-            {...this.props.inputProps}
+            {...this.props.screenProps.inputProps}
             label='LAST NAME'
             editable={this.state.editable}
             value={this.state.lastName}
@@ -117,7 +117,7 @@ class Settings extends Component {
             ref={'lastName'}
           />
           <TextField
-            {...this.props.inputProps}
+            {...this.props.screenProps.inputProps}
             label='EMAIL'
             editable={this.state.editable}
             onChangeText={(email) => this.setState({email})}

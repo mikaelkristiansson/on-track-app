@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 // COMPONENTS
 import ChartContainer from '../components/chart';
+import Indicator from '../components/activityIndicator';
 
 // HELPERS
 import { AppConstants } from '../helpers';
@@ -42,6 +43,7 @@ class Statistics extends Component {
       averageLastMonth: 0,
       modalVisible: false,
       refreshing: false,
+      loading: false,
       index: 0,
       routes: AppConstants.months,
       selectedYear: this.props.screenProps.selectedYear || now.year(),
@@ -96,7 +98,8 @@ class Statistics extends Component {
   }
 
   updateYear(year) {
-    this.props.screenProps.loadExercises(year);
+    this.setState({loading:true});
+    this.props.screenProps.loadExercises(year);//.then(() => this.setState({loading:false}));
   }
 
   static calculateAverage(elements, duration) {
@@ -122,10 +125,10 @@ class Statistics extends Component {
   }
 
   setAverage(exercises) {
+    // TODO: fix average to only count until current day
     let today = moment();
     let lastMonth =  moment().subtract(1, 'months');
     let sixMonthsAgo = moment().subtract(6, 'months');
-    //let exercises = this.state.exercises;
     let thisMonthExercises = [];
     let lastMonthExercises = [];
     let lastSixMonthsExercises = [];
@@ -169,6 +172,16 @@ class Statistics extends Component {
         index: this.currentMonth
       });
     });
+  }
+
+  _renderLoading() {
+    if(this.state.loading) {
+      return (
+        <Indicator />
+      );
+    } else {
+      return null;
+    }
   }
 
   render() {
@@ -254,6 +267,7 @@ class Statistics extends Component {
             </View>
           </TouchableWithoutFeedback>
         </Modal>
+        {this._renderLoading()}
       </View>
     );
   }

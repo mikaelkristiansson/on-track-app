@@ -3,6 +3,7 @@ import {View} from 'react-native';
 import { createRootNavigator } from './router';
 import moment from 'moment';
 
+// SCREENS AND COMPONENTS
 import Launch from './screens/Launch';
 import RegisterButton from './components/registerButton';
 
@@ -115,25 +116,25 @@ export default class App extends Component {
     const Layout = createRootNavigator(signedIn);
     return (
       <View style={{flex: 1}}>
-    <Layout screenProps={
-      {
-        loadExercises: (year) => this.loadExercises(year), 
-        registerExercise: () => this.registerExercise(),
-        signIn: (email, password) => this.signIn(email,password),
-        signOut: () => this.signOut(),
-        exercisesLoaded: this.state.exercisesLoaded, 
-        exercises: this.state.exercises,
-        selectedYear: this.state.selectedYear,
-        inputProps: {
-          fontSize: 14,
-          textColor: AppColors.input,
-          baseColor: AppColors.textSecondary,
-          tintColor: AppColors.brand.secondary
-        },
-      }
-    } />
-    {this._renderRegister()}
-    </View>
+        <Layout screenProps={
+          {
+            loadExercises: (year) => this.loadExercises(year), 
+            registerExercise: () => this.registerExercise(),
+            signIn: (email, password) => this.signIn(email,password),
+            signOut: () => this.signOut(),
+            exercisesLoaded: this.state.exercisesLoaded, 
+            exercises: this.state.exercises,
+            selectedYear: this.state.selectedYear,
+            inputProps: {
+              fontSize: 14,
+              textColor: AppColors.input,
+              baseColor: AppColors.textSecondary,
+              tintColor: AppColors.brand.secondary
+            },
+          }
+        } />
+        {this._renderRegister()}
+      </View>
     );
   }
 }

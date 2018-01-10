@@ -4,23 +4,34 @@ import {Actions} from 'react-native-router-flux';
 import { TextField } from 'react-native-material-textfield';
 import { AppColors, AppStyles } from '../theme';
 
-
+import Indicator from '../components/activityIndicator';
 import logo from '../images/logo.png';
 
 class SignIn extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {email: null, password: null};
+    this.state = {email: null, password: null, loading: false};
   }
 
   userLogin() {
     if (!this.state.email || !this.state.password) return;
+    this.setState({loading: true});
     this.props.screenProps.signIn(this.state.email, this.state.password);
   }
 
   backToSignUp() {
     this.props.navigation.navigate('SignUp');
+  }
+
+  _renderLoading() {
+    if(this.state.loading) {
+      return (
+        <Indicator />
+      );
+    } else {
+      return null;
+    }
   }
 
   render() {
@@ -56,6 +67,7 @@ class SignIn extends Component {
           </TouchableOpacity>
           <Button color={AppColors.brand.secondary} outlined title={'Sign Up'} onPress={this.backToSignUp.bind(this)} />
         </View>
+        {this._renderLoading()}
       </View>
     );
   }
