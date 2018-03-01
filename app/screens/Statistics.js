@@ -17,9 +17,6 @@ import { AppConstants } from '../helpers';
 // THEME
 import { AppColors, AppStyles } from '../theme';
 
-// API
-import exerciseStore from '../stores/exerciseStore';
-
 const initialLayout = {
   height: 0,
   width: Dimensions.get('window').width,
@@ -47,10 +44,7 @@ class Statistics extends Component {
       index: 0,
       routes: AppConstants.months,
       selectedYear: this.props.screenProps.selectedYear || now.year(),
-      availableYears: [
-        {'label': '2017', value: 2017},
-        {'label': '2018', value: 2018}
-      ] // TODO: make this dynamic
+      availableYears: []
     };
   }
 
@@ -91,10 +85,11 @@ class Statistics extends Component {
   componentDidMount() {
     setTimeout(()=> {
       this.setState({
-        index: this.currentMonth
+        index: this.currentMonth,
       });
     }, 1);
-    this.setAverage(this.props.screenProps.exercises);
+    if(this.props.screenProps.totalCount) this.setAverage(this.props.screenProps.exercises, this.props.screenProps.totalCount);
+    this.setYears();
   }
 
   updateYear(year) {
@@ -102,36 +97,43 @@ class Statistics extends Component {
     this.props.screenProps.loadExercises(year);//.then(() => this.setState({loading:false}));
   }
 
-  static calculateAverage(elements, duration) {
-    const formatted = elements.map(elem => {
-      return {created_at: moment(elem.created_at).startOf(duration).format('YYYY-MM-DD'), count: elem.count};
-    });
-
-    const dates = formatted.map(elem => elem.created_at);
-    const uniqueDates = dates.filter((created_at, index) => dates.indexOf(created_at) === index);
-
-    return uniqueDates.map(created_at => {
-      const count = formatted.filter(elem => elem.created_at === created_at).reduce((count) => count + 1, 0);
-      return {created_at, count};
+  setYears() {
+    let aY = [];
+    for (let i=4; i>=0; i--) {
+      let year = this.currentYear-i;
+      aY.push({label: String(year), value: year});
+    }
+    this.setState({
+      availableYears: aY
     });
   }
 
-  static average(elements) {
-    return elements.reduce((count, elem) => count + elem.count, 0) / elements.length;
-  }
+  // static calculateAverage(elements, duration) {
+  //   const formatted = elements.map(elem => {
+  //     return {created_at: moment(elem.created_at).startOf(duration).format('YYYY-MM-DD'), count: elem.count};
+  //   });
+
+  //   const dates = formatted.map(elem => elem.created_at);
+  //   const uniqueDates = dates.filter((created_at, index) => dates.indexOf(created_at) === index);
+
+  //   return uniqueDates.map(created_at => {
+  //     const count = formatted.filter(elem => elem.created_at === created_at).reduce((count) => count + 1, 0);
+  //     return {created_at, count};
+  //   });
+  // }
+
+  // static average(elements) {
+  //   return elements.reduce((count, elem) => count + elem.count, 0) / elements.length;
+  // }
 
   setWeekOfMonth(m) {
     return m.isoWeek() - moment(m).startOf('month').isoWeek() + 1;
   }
 
-  setAverage(exercises) {
-    // TODO: fix average to only count until current day
+  setAverage(exercises, totalCount) {
     let today = moment();
     let lastMonth =  moment().subtract(1, 'months');
-    let sixMonthsAgo = moment().subtract(6, 'months');
     let thisMonthExercises = [];
-    let lastMonthExercises = [];
-    let lastSixMonthsExercises = [];
     exercises.forEach(exercise => {
       let compareDate = moment(exercise.created_at, 'YYYY-MM-DD');
       // THIS MONTH
@@ -140,26 +142,15 @@ class Statistics extends Component {
       if(compareDate.isBetween(thisStart, thisEnd, 'days', true)) {
         thisMonthExercises.push(exercise);
       }
-      // LAST MONTH
-      let start = moment(lastMonth.startOf('month')).format('YYYY-MM-DD');
-      let end = moment(lastMonth.endOf('month')).format('YYYY-MM-DD');
-      if(compareDate.isBetween(start, end, 'days', true)) {
-        lastMonthExercises.push(exercise);
-      }
-      // LAST 6 MONTHS
-      if(compareDate.isAfter(moment(sixMonthsAgo.startOf('month')).format('YYYY-MM-DD'))) lastSixMonthsExercises.push(exercise);
     });
-    //let averageMonths = Statistics.calculateAverage(exercises, 'month');
     let weeksLastMonth = moment(moment(lastMonth.endOf('month')) - moment(lastMonth.startOf('month'))).isoWeeks();
     let weeksPassedHalfYear = today.diff(moment().subtract(6, 'months'), 'weeks');
-    let averageWeeks = Statistics.calculateAverage(exercises, 'week');
     let passedWeeks = moment().isoWeek();
-    //let passedMonths = moment().month();
     this.setState({
-      averageMonth: (thisMonthExercises.length / this.weekOfMonth).toFixed(1),//(Math.floor(Statistics.average(averageMonths)) / passedMonths).toFixed(1),
-      averageWeek: (Math.floor(Statistics.average(averageWeeks) || 0) / passedWeeks).toFixed(1),
-      averageLastMonth: (lastMonthExercises.length / weeksLastMonth).toFixed(1),
-      averageHalfYear: (lastSixMonthsExercises.length / weeksPassedHalfYear).toFixed(1)
+      averageMonth: (thisMonthExercises.length / this.weekOfMonth).toFixed(1),
+      averageWeek: ((totalCount.this_year || 0) / passedWeeks).toFixed(1),
+      averageLastMonth: ((totalCount.last_month || 0) / weeksLastMonth).toFixed(1),
+      averageHalfYear: ((totalCount.last_six_months || 0) / weeksPassedHalfYear).toFixed(1)
     });
   }
 

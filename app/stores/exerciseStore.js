@@ -23,6 +23,12 @@ class ExerciseStore {
       .then(res => res.json());
   };
 
+  getTotalCount = async () => {
+    const headers = await this.headers();
+    return fetch(`${API_URL}/exercises/total`, {method:'GET', headers: headers})
+      .then(res => res.json());
+  };
+
   save = async () => {
     const headers = await this.headers();
     return fetch(`${API_URL}/exercises`, 

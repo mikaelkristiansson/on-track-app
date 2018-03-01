@@ -22,7 +22,8 @@ class App extends Component {
       checkedSignIn: false,
       exercises: [],
       exercisesLoaded: false,
-      selectedYear: now.year()
+      selectedYear: now.year(),
+      totalCount: {}
     };
   }
 
@@ -49,13 +50,13 @@ class App extends Component {
   }
 
   loadExercises = async (year) => {
-    exerciseStore.get(year).then((exercises) => {
-      console.log('exercises: ',exercises);
-      this.setState({
-        exercises: exercises,
-        exercisesLoaded: true,
-        selectedYear: year
-      });
+    const total = await exerciseStore.getTotalCount();
+    const exes = await exerciseStore.get(year);
+    this.setState({
+      exercises: exes,
+      exercisesLoaded: true,
+      selectedYear: year,
+      totalCount: total
     });
     return true;
   }
@@ -115,7 +116,6 @@ class App extends Component {
   render() {
     const { checkedSignIn, signedIn } = this.state;
 
-    // If we haven't checked AsyncStorage yet, don't render anything (better ways to do this)
     if (!checkedSignIn) {
       return <Launch />;
     }
@@ -132,6 +132,7 @@ class App extends Component {
             signOut: () => this.signOut(),
             exercisesLoaded: this.state.exercisesLoaded, 
             exercises: this.state.exercises,
+            totalCount: this.state.totalCount,
             selectedYear: this.state.selectedYear,
             inputProps: {
               fontSize: 14,
