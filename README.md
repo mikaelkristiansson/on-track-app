@@ -1,9 +1,7 @@
 ## On Track App
 
-<img src="./printscreens/01.png" width="300" />
-<img src="./printscreens/02.png" width="300" />
-<img src="./printscreens/03.png" width="300" />
-<img src="./printscreens/04.png" width="300" />
+<img src="./printscreens/01.png" width="300" /><img src="./printscreens/02.png" width="300" />
+<img src="./printscreens/03.png" width="300" /><img src="./printscreens/04.png" width="300" />
 
 To run your app on iOS:
    react-native run-ios
