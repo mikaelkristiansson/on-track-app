@@ -60,13 +60,21 @@ class UserStore {
     if (Firebase === null) {
       throw ErrorMessages.invalidFirebase;
     }
-    const { uid } = await Firebase.auth().signInWithEmailAndPassword(email, password);
-    this.uid = uid;
-    const { firstName, lastName } = await this.getUserData();
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    return true;
+    this.error = {};
+    const { uid } = await Firebase.auth().signInWithEmailAndPassword(email, password)
+    .catch((error) => {
+      this.error = error;
+    });
+    if(uid) {
+      this.uid = uid;
+      const { firstName, lastName } = await this.getUserData();
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.email = email;
+      return true;
+    } else {
+      return this.error;
+    }
   };
 
   signUp = async ({ email, password, firstName, lastName }) => {

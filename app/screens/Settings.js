@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Text, TouchableOpacity, View, ScrollView} from 'react-native';
-import {Actions} from 'react-native-router-flux';
 import { Gravatar } from 'react-native-gravatar';
 import { TextField } from 'react-native-material-textfield';
 
@@ -13,8 +12,8 @@ import userStore from '../stores/userStore';
 
 class Settings extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       editable: false,
       email: userStore.email, 
@@ -22,6 +21,14 @@ class Settings extends Component {
       lastName: userStore.lastName
     };
   }
+
+  static navigationOptions = {
+    tabBarLabel: 'Statistics',
+    tabBarIcon: ({ focused, tintColor }) => (
+      <Ionicon name={focused ? 'ios-settings' : 'ios-settings-outline'} size={36} color={focused ? AppColors.tabbar.iconSelected : AppColors.tabbar.iconDefault} />
+    ),
+    showLabel: false,
+  };
 
   toggleEdit() {
     this.setState({
@@ -43,7 +50,7 @@ class Settings extends Component {
   }
 
   userLogOut() {
-    Actions.logout();
+    this.props.screenProps.signOut();
   }
 
   _renderSave() {
@@ -93,7 +100,7 @@ class Settings extends Component {
             {this._renderIcon()}
           </TouchableOpacity>
           <TextField
-            {...this.props.inputProps}
+            {...this.props.screenProps.inputProps}
             label='FIRST NAME'
             editable={this.state.editable}
             value={this.state.firstName}
@@ -101,7 +108,7 @@ class Settings extends Component {
             ref={'firstName'}
           />
           <TextField
-            {...this.props.inputProps}
+            {...this.props.screenProps.inputProps}
             label='LAST NAME'
             editable={this.state.editable}
             value={this.state.lastName}
@@ -109,7 +116,7 @@ class Settings extends Component {
             ref={'lastName'}
           />
           <TextField
-            {...this.props.inputProps}
+            {...this.props.screenProps.inputProps}
             label='EMAIL'
             editable={this.state.editable}
             onChangeText={(email) => this.setState({email})}
@@ -124,7 +131,7 @@ class Settings extends Component {
           {this._renderSave()}
         </ScrollView>
         <View style={[AppStyles.centerContent, {marginBottom: 20}]}>
-          <TouchableOpacity style={AppStyles.buttonWrapper} onPress={this.userLogOut}>
+          <TouchableOpacity style={AppStyles.buttonWrapper} onPress={this.userLogOut.bind(this)}>
             <Text style={AppStyles.buttonText}> SIGN OUT </Text>
           </TouchableOpacity>
         </View>

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 import ActionButton from 'react-native-action-button';
 
-const red = "#FA3D4B";
+import { AppColors } from '../theme';
 
 class RegisterButton extends Component {
 
@@ -17,15 +17,15 @@ class RegisterButton extends Component {
 
     render() {
         return (
-            <View style={{zIndex: 99999999999999, position: 'absolute', bottom: 45}}>
+            // <View style={{zIndex: 99999999999999, position: 'absolute', bottom: 45}}>
             <ActionButton
-                buttonColor={red} 
+                buttonColor={AppColors.brand.primary} 
                 position="center"
-                offsetY={-25}
+                offsetY={5}
                 hideShadow={true}
                 onPress={this.registerExerciseFromChild}
             />
-            </View>
+            // </View>
         );
     }
 }
